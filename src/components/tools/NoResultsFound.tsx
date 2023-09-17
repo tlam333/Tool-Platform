@@ -1,7 +1,7 @@
 import React from "react";
 
 function NoResultsFound() {
-  return <div>No Results found. Plese change your search parameter</div>;
+  return <div>No Results found. Please change your search criteria</div>;
 }
 
 export default NoResultsFound;
