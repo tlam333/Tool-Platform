@@ -49,11 +49,11 @@ const NavbarResponsive = () => {
               <Image
                 src="/logo.png"
                 alt="nearbytools logo"
-                width="35"
-                height="35"
+                width="44"
+                height="44"
                 className="mr-2 rounded-sm"
               ></Image>
-              <p>Nearby Tools</p>
+              <h2>Nearby Tools</h2>
             </Link>
           </div>
         </div>
