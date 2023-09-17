@@ -9,7 +9,7 @@ const NavbarResponsive = () => {
   const MenuItems = [
     { name: "List Tools", link: "/", icon: <PlusCircle /> },
     { name: "Find Tools", link: "/for-rent", icon: <Search /> },
-    { name: "Others", link: "/", icon: <User /> },
+    // { name: "Others", link: "/", icon: <User /> },
   ];
   return (
     <div
@@ -47,13 +47,13 @@ const NavbarResponsive = () => {
           <div className="mx-2 flex-1 px-2">
             <Link href="/" className="flex items-center font-display text-2xl">
               <Image
-                src="/icon.png"
+                src="/logo.png"
                 alt="nearbytools logo"
-                width="30"
-                height="30"
+                width="35"
+                height="35"
                 className="mr-2 rounded-sm"
               ></Image>
-              <p>NearbyTools</p>
+              <p>Nearby Tools</p>
             </Link>
           </div>
         </div>
