@@ -43,6 +43,7 @@ function BookForm({ tool }: Props) {
     toolId: Yup.string().required("Tool id is required"),
     ownerId: Yup.string().required("Owner id is required"),
     toolName: Yup.string().required("Tool name is required"),
+    toolLocation: Yup.string().required("Tool location is required"),
   });
   const { register, handleSubmit, formState, reset } = useForm({
     shouldUseNativeValidation: true,
@@ -88,6 +89,11 @@ function BookForm({ tool }: Props) {
                 type="hidden"
                 {...register("toolName")}
                 value={tool.name}
+              />
+              <input
+                type="hidden"
+                {...register("toolLocation")}
+                value="tool.suburb"
               />
               <div className="col-span-1">
                 <input

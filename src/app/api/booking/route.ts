@@ -19,6 +19,7 @@ export async function POST(request: Request) {
     startDate,
     endDate,
     comments,
+    toolLocation,
   } = await request.json();
 
   //create the renter user
@@ -93,7 +94,7 @@ export async function POST(request: Request) {
   const dynamicTemplateData = {
     first_name: firstName,
     full_name: firstName + " " + lastName,
-    city: suburb,
+    city: toolLocation,
     tool_name: toolName,
   };
   const templateId = "d-80a6f09b8373499c8ef58d5dfa0d5c1d";
