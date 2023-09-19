@@ -75,10 +75,11 @@ function BookForm({ tool }: Props) {
 
   return (
     <>
-      <div className="mx-auto mb-10 mt-10 gap-3 text-center">
+      <div className="mx-auto mt-2 gap-3 text-center">
         {!submitedStatus && (
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-2">
+            {/* <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols2"> */}
+            <div className="grid grid-cols-2 gap-2">
               <input type="hidden" {...register("toolId")} value={tool.id} />
               <input
                 type="hidden"
@@ -93,7 +94,7 @@ function BookForm({ tool }: Props) {
               <input
                 type="hidden"
                 {...register("toolLocation")}
-                value="tool.suburb"
+                value={tool.location}
               />
               <div className="col-span-1">
                 <input
@@ -157,7 +158,7 @@ function BookForm({ tool }: Props) {
               <div className="col-span-2">
                 <textarea
                   className="focus:shadow-outline mb-5 w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                  placeholder="Comments"
+                  placeholder="Message..."
                   {...register("comments")}
                 />
               </div>

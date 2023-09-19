@@ -107,7 +107,7 @@ export async function POST(request: Request) {
     dynamic_template_data: dynamicTemplateData,
   };
 
-  await sgMail
+  sgMail
     .send(msg)
     .then(() => {
       console.log("Email sent");

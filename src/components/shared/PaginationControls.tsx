@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 interface Props {
   defaultLimit: number;
@@ -18,7 +19,7 @@ function PaginationControls({ defaultLimit, total, nextPage }: Props) {
 
   //store the page numbr with next page offset in local storage
   var nextPageList = [{ page, nextPage }];
-  const pages = window.sessionStorage.getItem("nextPageList");
+
   var keywordLocation = ``;
   if (keyword) {
     keywordLocation = `&keyword=${keyword}`;
@@ -26,12 +27,15 @@ function PaginationControls({ defaultLimit, total, nextPage }: Props) {
   if (location) {
     keywordLocation = keywordLocation + `&location=${location}`;
   }
-  if (pages) {
-    const pageData = JSON.parse(pages);
-    pageData[Number(page) - 1] = nextPage;
-    nextPageList = pageData;
-  }
-  window.sessionStorage.setItem("nextPageList", JSON.stringify(nextPageList));
+  useEffect(() => {
+    const pages = window.sessionStorage.getItem("nextPageList");
+    if (pages) {
+      const pageData = JSON.parse(pages);
+      pageData[Number(page) - 1] = nextPage;
+      nextPageList = pageData;
+    }
+    window.sessionStorage.setItem("nextPageList", JSON.stringify(nextPageList));
+  }, []);
 
   const setNextPage = (page: number) => () => {
     router.push(
