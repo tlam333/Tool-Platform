@@ -14,6 +14,7 @@ import SearchForm from "@/components/tools/SearchForm";
 import { Suspense } from "react";
 import { getAllTools } from "@/lib/services/Tools.services";
 import NoResultsFound from "@/components/tools/NoResultsFound";
+import Alert from "@/components/shared/Alert";
 
 export const metadata: Metadata = {
   title: "Hire Tools",
@@ -43,7 +44,7 @@ export default async function FindTools({
   //implement error handling for this api call
   const ToolsData: Promise<ToolsPage> = getAllTools(searchParams);
   const toolsPage = await ToolsData;
-  const { tools, total, nextPage } = await toolsPage;
+  const { tools, total, nextPage, message } = await toolsPage;
 
   return (
     <>
@@ -73,6 +74,7 @@ export default async function FindTools({
                 total={total}
                 nextPage={nextPage}
                 defaultLimit={Number(limit)}
+                message={message}
               ></PaginationControls>
             </div>
           </>
@@ -83,6 +85,7 @@ export default async function FindTools({
           </div>
         )}
       </div>
+      {message && <Alert message={message} />}
       {/* </div> */}
     </>
   );

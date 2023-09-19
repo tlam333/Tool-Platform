@@ -19,6 +19,7 @@ type ToolsPage = {
   pageIndex: number;
   total: number;
   nextPage: string;
+  message: string;
 };
 
 type Booking = {

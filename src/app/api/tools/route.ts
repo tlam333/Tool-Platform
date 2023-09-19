@@ -9,6 +9,7 @@ export async function GET(request: Request, response: NextApiResponse) {
   var offset = searchParams.get("offset") || undefined; //this is the offset for the next page
   const sortby = searchParams.get("sort") || "UpdatedAt";
   const keyword = encodeURI((searchParams.get("keyword") || "").toLowerCase());
+  var message = searchParams.get("message") || "";
   const location = encodeURI(
     (searchParams.get("location") || "").toLowerCase()
   );
@@ -58,8 +59,23 @@ export async function GET(request: Request, response: NextApiResponse) {
   offset = await res.offset; //this is the offset for the next page
   const error = await res.error;
   if (error) {
-    console.error(error);
-    return NextResponse.error();
+    console.log(error);
+
+    const redirect = new URL("/for-rent", request.url);
+    redirect.searchParams.set("keyword", keyword);
+    if (keyword) {
+      redirect.searchParams.set("keyword", keyword);
+    }
+    if (location) {
+      redirect.searchParams.set("location", location);
+    }
+    redirect.searchParams.set(
+      "message",
+      "Data expired, showing the first page results."
+    );
+    const newReq: Request = new Request(redirect.href, request);
+
+    return GET(newReq, response);
   }
 
   const tools: Tool[] = await records.map((record: any) => ({
@@ -86,5 +102,6 @@ export async function GET(request: Request, response: NextApiResponse) {
     pageIndex: page,
     total: tools.length,
     nextPage: offset,
+    message: message,
   });
 }

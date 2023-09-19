@@ -17,7 +17,7 @@ export async function getAllTools(searchParams: {
     headers: {
       "Content-Type": "application/json",
     },
-    next: { revalidate: 3600 },
+    next: { revalidate: 60 },
     //cache: "no-store",
   });
   if (!res.ok) {
