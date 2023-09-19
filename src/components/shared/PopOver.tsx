@@ -10,17 +10,10 @@ interface Props {
 function PopOver({ id, heading, subheading, children }: Props) {
   return (
     <>
-      {/* Open the modal using document.getElementById('ID').showModal() method
-      <button
-        className="btn"
-        onClick={() => document.getElementById("my_modal_5").showModal()}
-      >
-        open modal
-      </button> */}
-      <dialog id={id} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
+      <dialog id={id} className="modal modal-middle">
+        <div className="modal-box mt-5">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-5">
               ✕
             </button>
           </form>

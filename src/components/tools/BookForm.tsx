@@ -21,7 +21,11 @@ function BookForm({ tool }: Props) {
     email: Yup.string().email("Invalid email").required("Email is required"),
     phone: Yup.string().required("Phone is required"),
     suburb: Yup.string().required("Suburb is required"),
-    postCode: Yup.number().required("Post code is required"),
+    postCode: Yup.string()
+      .matches(/^(0[289][0-9]{2})|([1-9][0-9]{3})$/, {
+        message: "Invalid post code",
+      })
+      .required("Post code is required"),
     startDate: Yup.date()
       .default(today)
       .min(today, "Start date can't be in the past")
