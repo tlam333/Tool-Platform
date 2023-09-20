@@ -58,7 +58,7 @@ export default async function Faq() {
       <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={faqJsonLd}
-        key="faq-jsonld"
+        id="faq-jsonld"
       />
       <div className="px-2 md:px-2 lg:px-10 xl:px-20 w-full min-h-screen">
         <div className="mx-auto max-w-5xl py-10">
