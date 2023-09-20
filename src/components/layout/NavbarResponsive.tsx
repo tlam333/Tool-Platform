@@ -2,7 +2,13 @@
 import useScroll from "@/lib/hooks/use-scroll";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, PlusCircle, User, AlignJustify } from "lucide-react";
+import {
+  Search,
+  PlusCircle,
+  User,
+  AlignJustify,
+  HelpCircle,
+} from "lucide-react";
 
 const NavbarResponsive = () => {
   const scrolled = useScroll(50);
@@ -10,6 +16,7 @@ const NavbarResponsive = () => {
     { name: "List Tools", link: "/", icon: <PlusCircle /> },
     { name: "Find Tools", link: "/for-rent", icon: <Search /> },
     // { name: "Others", link: "/", icon: <User /> },
+    { name: "FAQ", link: "/faq", icon: <HelpCircle /> },
   ];
   return (
     <div

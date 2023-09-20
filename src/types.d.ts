@@ -48,3 +48,10 @@ type User = {
   createdAt: string;
   updatedAt: string;
 };
+
+type FAQ = {
+  id: string;
+  question: string;
+  answer: string;
+  type: string;
+};
