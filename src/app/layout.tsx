@@ -7,14 +7,14 @@ import Footer from "@/components/layout/Footer";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "NearbyTools - Hire tools from your neighbours",
+  title: "Nearby Tools - Tool & Equipment Rental Marketplace",
   description:
-    "Revolutionise the way you access tools with our peer-to-peer platform. Get access to high-quality tools in your area, save money, and contribute to a sustainable lifestyle. Join us today!",
+    "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
   twitter: {
     card: "summary_large_image",
-    title: "NearbyTools - Hire tools from your neighbours",
+    title: "Nearby Tools - Hire tools from your neighbours",
     description:
-      "Revolutionise the way you access tools with our peer-to-peer platform. Get access to high-quality tools in your area, save money, and contribute to a sustainable lifestyle. Join us today!",
+      "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
     creator: "@nearbytools",
   },
   metadataBase: new URL("https://nearbytools.com.au"),
