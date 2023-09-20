@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 const apiURL = process.env.AIRTABLE_API_URL;
 
 export async function GET() {
-  console.log("calling faq GET");
   var url = `${apiURL}/${process.env.BASE_ID}/FAQ?pageSize=100&sort[0][field]=ID&sort[0][direction]=asc`;
 
   url = encodeURI(url);

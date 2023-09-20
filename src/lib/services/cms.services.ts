@@ -11,7 +11,7 @@ export async function getAllFaq() {
     headers: {
       "Content-Type": "application/json",
     },
-    next: { revalidate: 60 },
+    //next: { revalidate: 60 },
     //cache: "no-store",
   });
   if (!res.ok) {
