@@ -35,10 +35,10 @@ export default async function Faq() {
         (item: FAQ) =>
           `{
         "@type": "Question",
-        "name": "${item.question}",
+        "name": "${item.question?.replace(/[\n\r]/g, " ")}",
         "acceptedAnswer": {
             "@type": "Answer",
-            "text": "<p>${item.answer}</p>",
+            "text": "<p>${item.answer?.replace(/[\n\r]/g, " ")}</p>"
         }
     }`
       );
