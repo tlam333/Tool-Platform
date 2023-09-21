@@ -1,14 +1,8 @@
 import Balancer from "react-wrap-balancer";
 //import Filters from "@/components/tools/Filters";
 import ToolList from "@/components/tools/ToolList";
-// import { useForm } from "react-hook-form";
-// import * as Yup from "yup";
-// import { yupResolver } from "@hookform/resolvers/yup";
-//import { DevTool } from "@hookform/devtools";
 import Loading from "@/components/shared/Loading";
 import PaginationControls from "@/components/shared/PaginationControls";
-import { useRouter, useSearchParams } from "next/navigation";
-//import * as ToolsAPI from "@/api/tools/route";
 import type { Metadata } from "next";
 import SearchForm from "@/components/tools/SearchForm";
 import { Suspense } from "react";
@@ -17,8 +11,22 @@ import NoResultsFound from "@/components/tools/NoResultsFound";
 import Alert from "@/components/shared/Alert";
 
 export const metadata: Metadata = {
-  title: "Hire Tools",
-  description: "Find tools available for rent in your area",
+  title: "Nearby Tools - for Hire",
+  description:
+    "Hire tools and equipment from communities, individuals and equipment rental stores in your local area.",
+  openGraph: {
+    type: "website",
+    url: "https://nearbytools.com.au/for-rent",
+    title: "Nearby Tools - Tool & Equipment Rental Marketplace",
+    description:
+      "Hire tools and equipment from communities, individuals and equipment rental stores in your local area.",
+    siteName: "Nearby Tools",
+    images: [
+      {
+        url: "https://nearbytools.com.au/icon.png",
+      },
+    ],
+  },
 };
 
 export default async function FindTools({
@@ -41,7 +49,6 @@ export default async function FindTools({
   searchParams["offset"] = offset;
   searchParams["sortby"] = sortby;
 
-  //implement error handling for this api call
   const ToolsData: Promise<ToolsPage> = getAllTools(searchParams);
   const toolsPage = await ToolsData;
   const { tools, total, nextPage, message } = await toolsPage;

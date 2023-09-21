@@ -10,6 +10,19 @@ export const metadata = {
   title: "Nearby Tools - Tool & Equipment Rental Marketplace",
   description:
     "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
+  openGraph: {
+    type: "website",
+    url: "https://nearbytools.com.au",
+    title: "Nearby Tools - Tool & Equipment Rental Marketplace",
+    description:
+      "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
+    siteName: "Nearby Tools",
+    images: [
+      {
+        url: "https://nearbytools.com.au/icon.png",
+      },
+    ],
+  },
   twitter: {
     card: "summary_large_image",
     title: "Nearby Tools - Hire tools from your neighbours",
