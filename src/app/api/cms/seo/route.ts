@@ -1,8 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 const apiURL = process.env.AIRTABLE_API_URL;
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   const title = "Nearby Tools - Tool & Equipment Rental Marketplace";
   const description =
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!";
