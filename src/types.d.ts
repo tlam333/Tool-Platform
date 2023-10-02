@@ -5,6 +5,7 @@ type Tool = {
   description: string;
   rent: number;
   duration: RentDuration;
+  deposit: number;
   images: string[];
   category: ToolCategory;
   owner: string;

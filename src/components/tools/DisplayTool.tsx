@@ -4,7 +4,7 @@ import { ToolPlaceholderImg } from "@/lib/constants";
 import { MapPin } from "lucide-react";
 import { truncate } from "@/lib/utils";
 import { useState } from "react";
-import BookForm from "./BookForm";
+import BookForm from "./forms/BookForm";
 import PopOver from "../shared/PopOver";
 interface Props {
   tool: Tool;

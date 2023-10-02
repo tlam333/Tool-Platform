@@ -10,7 +10,29 @@ const nextConfig = {
         port: '',
         pathname: '/v1/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'nearbytools-public.s3.ap-southeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      }
     ],
+  },
+  webpack: (config, {buildId, dev, isServer, defaultLoaders, webpack}) => {
+    config.externals.push({
+        '@aws-sdk/signature-v4-multi-region': 'commonjs @aws-sdk/signature-v4-multi-region',
+    })
+
+    return config
+  },
+  async redirects() {
+    return [
+      {
+        source: '/for-rent',
+        destination: '/for-hire',
+        permanent: true,
+      },
+    ]
   },
 };
   

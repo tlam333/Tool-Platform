@@ -9,13 +9,13 @@ import { Suspense } from "react";
 export const metadata = {
   title: "Nearby Tools - Tool & Equipment Rental Marketplace",
   description:
-    "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
+    "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
   openGraph: {
     type: "website",
     url: "https://nearbytools.com.au",
     title: "Nearby Tools - Tool & Equipment Rental Marketplace",
     description:
-      "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
+      "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
     siteName: "Nearby Tools",
     images: [
       {
@@ -42,8 +42,6 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body className={cx(sfPro.variable, inter.variable)}>
-        {/* <div className="fixed h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-cyan-100" /> */}
-        {/* <div className="fixed h-screen w-full" /> */}
         <Suspense fallback="...">
           <Nav />
         </Suspense>

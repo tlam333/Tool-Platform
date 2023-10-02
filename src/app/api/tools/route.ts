@@ -1,8 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 const apiURL = process.env.AIRTABLE_API_URL;
+const baseId = process.env.BASE_ID;
+import sgMail from "@sendgrid/mail";
+var url = `${apiURL}/${baseId}/Tools`;
 
-export async function GET(request: Request, response: NextApiResponse) {
+export async function GET(request: NextRequest, response: NextResponse) {
   const { searchParams } = new URL(request.url);
   const limit = searchParams.get("limit") || 5;
   const page = searchParams.get("page") || 1;
@@ -51,6 +53,8 @@ export async function GET(request: Request, response: NextApiResponse) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
     },
+    //next: { revalidate: 60 },
+    cache: "no-store",
   })
     .then((response) => response.json())
     .catch((err) => console.error(err));
@@ -73,7 +77,7 @@ export async function GET(request: Request, response: NextApiResponse) {
       "message",
       "Data expired, showing the first page results."
     );
-    const newReq: Request = new Request(redirect.href, request);
+    const newReq: NextRequest = new NextRequest(redirect.href, request);
 
     return GET(newReq, response);
   }
@@ -103,5 +107,71 @@ export async function GET(request: Request, response: NextApiResponse) {
     total: tools.length,
     nextPage: offset,
     message: message,
+  });
+}
+
+/**create tools*/
+export async function POST(request: NextRequest, response: NextResponse) {
+  const {
+    name,
+    brand,
+    description,
+    rent,
+    duration,
+    deposit,
+    images,
+    category,
+    owner,
+  }: Partial<Tool> = await request.json();
+
+  const s3bucketUrl =
+    "https://" +
+    process.env.NEXT_PUBLIC_AWS_BUCKET_NAME +
+    ".s3." +
+    process.env.NEXT_PUBLIC_AWS_REGION +
+    ".amazonaws.com/";
+
+  const imageList = images
+    ?.toString()
+    .replace(/[\n\r]/g, "")
+    .split(",")
+    .map((image: any) => ({ url: s3bucketUrl + image }));
+  var message = "Tool created successfully.";
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+    },
+    body: JSON.stringify({
+      records: [
+        {
+          fields: {
+            "Product Name": name,
+            "Brand Name": brand,
+            Description: description,
+            "Rental fee": rent,
+            "Rental fee duration": duration,
+            "Security Deposit": deposit,
+            Images: images
+              ?.toString()
+              .replace(/[\n\r]/g, "")
+              .split(",")
+              .map((image: any) => ({ url: s3bucketUrl + image })),
+            "Tool Category": category,
+            Email: [owner],
+          },
+        },
+      ],
+    }),
+  })
+    .then((response) => response.json())
+    .catch((err) => {
+      console.error(err);
+      message = err;
+    });
+  return NextResponse.json({
+    message: message,
+    id: res?.records[0]?.id,
   });
 }

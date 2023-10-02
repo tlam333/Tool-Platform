@@ -13,8 +13,8 @@ import {
 const NavbarResponsive = () => {
   const scrolled = useScroll(50);
   const MenuItems = [
-    { name: "List Tools", link: "/", icon: <PlusCircle /> },
-    { name: "Find Tools", link: "/for-rent", icon: <Search /> },
+    { name: "List Tools", link: "/list-for-hire", icon: <PlusCircle /> },
+    { name: "Hire Tools", link: "/for-rent", icon: <Search /> },
     // { name: "Others", link: "/", icon: <User /> },
     { name: "FAQ", link: "/faq", icon: <HelpCircle /> },
   ];

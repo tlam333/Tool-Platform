@@ -37,3 +37,18 @@ export async function getToolById(id: string) {
 
   return res.json();
 }
+
+export async function createTool(formData: Tool) {
+  const res = await fetch(`${apiURL}/tools`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
+  if (!res.ok) {
+    return undefined;
+  }
+
+  return res.json();
+}
