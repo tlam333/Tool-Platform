@@ -20,6 +20,9 @@ export async function uploadFile(file: File): Promise<string> {
 
   await fetch(url, {
     method: "PUT",
+    headers: {
+      "Content-Type": file.type,
+    },
     body: file,
   })
     .then((res) => {
