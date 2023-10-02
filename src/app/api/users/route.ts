@@ -58,21 +58,26 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
   // Create the email message
   const msg = {
-    to: [{ email: email, name: firstName + " " + lastName }],
+    to: [
+      {
+        email: email || "nagendra@nearbytools.com.au",
+        name: firstName + " " + lastName,
+      },
+    ],
     from: { email: "will@nearbytools.com.au", name: "Will @ Nearby Tools" },
     templateId,
     dynamic_template_data: dynamicTemplateData,
   };
-
-  sgMail
-    .send(msg)
-    .then(() => {
-      console.log("Welcome Email sent");
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
+  if (email) {
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log("Welcome Email sent");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   return NextResponse.json({
     message: message,
     id: res.records[0].id,
