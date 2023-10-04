@@ -5,10 +5,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Loading from "@/components/shared/Loading";
 import Input from "@/components/tools/forms/Input";
 import { createUser } from "@/lib/services/User.services";
+import { useRouter } from "next/navigation";
 
 interface Props {
   buttonText: string;
-  setUser: (user: string) => void;
+  setUser?: (user: string) => void;
+  redirect?: string;
 }
 const userSchema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
@@ -24,7 +26,7 @@ const userSchema = Yup.object().shape({
   state: Yup.string().required("State is required"),
   country: Yup.string().required("Country is required"),
 });
-export default function UserForm({ buttonText, setUser }: Props) {
+export default function UserForm({ buttonText, setUser, redirect }: Props) {
   const {
     register,
     handleSubmit,
@@ -43,8 +45,11 @@ export default function UserForm({ buttonText, setUser }: Props) {
     const res = await createUser(data).then((res) => {
       if (res.id) {
         window.localStorage.setItem("userId", JSON.stringify(res.id));
-
-        setUser(res.id);
+        if (setUser) setUser(res.id);
+        if (redirect) {
+          const router = useRouter();
+          router.push(redirect);
+        }
       }
     });
   }

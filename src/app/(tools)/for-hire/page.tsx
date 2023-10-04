@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Hire tools and equipment from communities, individuals and equipment rental stores in your local area.",
   openGraph: {
     type: "website",
-    url: "https://nearbytools.com.au/for-rent",
+    url: "https://nearbytools.com.au/for-hire",
     title: "Nearby Tools - Tool & Equipment Rental Marketplace",
     description:
       "Hire tools and equipment from communities, individuals and equipment rental stores in your local area.",
@@ -56,10 +56,10 @@ export default async function FindTools({
   return (
     <>
       <div className="px-2 md:px-2 lg:px-10 xl:px-20 w-full bg-base-200 min-h-screen">
-        <div className="mx-auto mb-10 mt-10 gap-3 text-center max-w-5xl">
+        <div className="mx-auto mb-10 mt-10 gap-3 text-center">
           <h1>
             <Balancer>
-              Search and find tools available in your desired location.
+              Search Tools & Equipment for Hire in your Location.
             </Balancer>
           </h1>
         </div>
