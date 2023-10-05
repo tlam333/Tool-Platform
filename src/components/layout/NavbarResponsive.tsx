@@ -17,7 +17,7 @@ const NavbarResponsive = () => {
       name: "List Tools",
       link: "/list-for-hire",
       icon: <PlusCircle />,
-      className: "btn btn-outline btn-primary",
+      className: "btn btn-cta",
     },
     {
       name: "Hire Tools",
@@ -90,7 +90,7 @@ const NavbarResponsive = () => {
                 <li key={item.name} className="mx-1">
                   <Link
                     href={item.link}
-                    className={`flex items-center font-display text-xl normal-case hover:text-blue-500 ${item.className}`}
+                    className={`flex items-center ${item.className}`}
                   >
                     {item.icon} <p>{item.name}</p>
                   </Link>

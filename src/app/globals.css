@@ -17,3 +17,24 @@ h3 {
   @apply md:text-2xl;
   line-height: 1.5;
 }
+
+[data-theme="light"] .btn-primary {
+  @apply text-black;
+}
+
+[data-theme="light"] .btn {
+  @apply text-lg;
+  @apply md:text-xl;
+}
+
+.btn-cta {
+  @apply border-solid;
+  @apply border-primary;
+  @apply border-2;
+  @apply bg-inherit;
+}
+
+.btn-cta:hover {
+  @apply bg-primary;
+  @apply border-primary;
+}

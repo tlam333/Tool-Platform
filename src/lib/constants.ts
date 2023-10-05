@@ -10,10 +10,10 @@ export const ToolCategories = [
 export const RentalPeriods = ["Per Hour", "Per Day", "Per Week", "Per Month"];
 export const ToolPlaceholderImg = `/image-placeholder.png`;
 export const Colors = [
-  "default",
   "primary",
-  "success",
+  "default",
   "warning",
+  "success",
   "error",
   "info",
   "dark",
