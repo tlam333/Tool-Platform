@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Loading from "@/components/shared/Loading";
 import { useRouter, useSearchParams } from "next/navigation";
-import { BaseSyntheticEvent, use } from "react";
+import { BaseSyntheticEvent } from "react";
 import { useEffect } from "react";
 import Input from "@/components/tools/forms/Input";
 

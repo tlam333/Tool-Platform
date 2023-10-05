@@ -77,8 +77,8 @@ const NavbarResponsive = () => {
                 width="300"
                 height="85"
                 className="mr-2 rounded-sm"
+                style={{ width: "auto" }}
               ></Image>
-              {/* <h2>Nearby Tools</h2> */}
             </Link>
           </div>
         </div>

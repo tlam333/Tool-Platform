@@ -54,7 +54,7 @@ export default async function Home({
     {
       user: "Josh",
       reviewText:
-        "As a sustainability enthusiast, I'm thrilled to be a part of NearbyTools' mission. Sharing tools, reducing waste, and collaborating with neighbours is incredibly fulfilling.",
+        "As a sustainability enthusiast, I am thrilled to be a part of Nearby Tools mission. Sharing tools, reducing waste, and collaborating with neighbours is incredibly fulfilling.",
     },
     {
       user: "Mary",
@@ -64,7 +64,7 @@ export default async function Home({
     {
       user: "Jane",
       reviewText:
-        "I've been using NearbyTools for a few weeks now and I'm impressed with the quality of tools available. I've saved a bundle on my DIY projects!",
+        "I have been using NearbyTools for a few weeks now and I am impressed with the quality of tools available. I have saved a bundle on my DIY projects!",
     },
   ];
   return (
@@ -117,7 +117,7 @@ export default async function Home({
             <p className="py-6">
               <Balancer>
                 Got tools gathering dust? Turn them into extra cash! List your
-                underused tools & equipment on our platform. It's a win-win –
+                underused tools & equipment on our platform. It is a win-win –
                 you declutter your space and boost your wallet. Join the sharing
                 economy and make your tools work for you! 🛠️🔗
               </Balancer>
@@ -155,9 +155,9 @@ export default async function Home({
             <p className="py-6">
               <Balancer>
                 Building a treehouse? Crafting custom furniture? Or need tools
-                for your one off jobs? Why spend a fortune on tools you'll only
-                use occasionally? You can easily borrow what you need, when you
-                need it.
+                for your one off jobs? Why spend a fortune on tools you will
+                only use occasionally? You can easily borrow what you need, when
+                you need it.
               </Balancer>
             </p>
 

@@ -7,7 +7,10 @@ function ReviewCarousal({ reviews }: Props) {
   return (
     <div className="carousel carousel-center md:p-4 gap-2 lg:space-x-4 my-5">
       {reviews.map((review) => (
-        <div className="carousel-item bg-base-100 max-w-sm md:max-w-lg rounded-box py-4 md:py-10 px-1">
+        <div
+          className="carousel-item bg-base-100 max-w-sm md:max-w-lg rounded-box py-4 md:py-10 px-1"
+          key={review.reviewText}
+        >
           <div>
             <div className="m-5">
               <Balancer>

@@ -40,6 +40,7 @@ export default function UserForm({ buttonText, setUser, redirect }: Props) {
       state: "VIC",
     },
   });
+  const router = useRouter();
 
   async function onSubmit(data: any) {
     const res = await createUser(data).then((res) => {
@@ -47,7 +48,6 @@ export default function UserForm({ buttonText, setUser, redirect }: Props) {
         window.localStorage.setItem("userId", JSON.stringify(res.id));
         if (setUser) setUser(res.id);
         if (redirect) {
-          const router = useRouter();
           router.push(redirect);
         }
       }

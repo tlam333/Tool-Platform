@@ -1,4 +1,4 @@
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
