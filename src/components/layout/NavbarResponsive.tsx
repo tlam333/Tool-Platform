@@ -78,6 +78,7 @@ const NavbarResponsive = () => {
                 height="85"
                 className="mr-2 rounded-sm"
                 style={{ width: "auto" }}
+                priority={true}
               ></Image>
             </Link>
           </div>

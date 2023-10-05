@@ -26,6 +26,7 @@
       "@/styles/*": ["./src/styles/*"],
       "@/api/*": ["./src/app/api/*"],
       "@/css/*": ["./src/css/*"],
+      "@/public/*": ["./public/*"],
     },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

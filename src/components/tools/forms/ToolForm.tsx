@@ -230,7 +230,7 @@ export default function ToolForm({ buttonText, user }: Props) {
             List another tool
           </button>
           <br />
-          <Link href="/for-rent" className="btn m-5 btn-default">
+          <Link href="/for-hire" className="btn m-5 btn-default">
             <p>View listed tools</p>
           </Link>
         </div>
