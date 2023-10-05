@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const metadata: Metadata = {
-  title: "Nearby Tools & Equipment List For Hire",
+  title: "Nearby Tools - and Equipment List For Hire",
   description:
     "List your tools and equipment for hire on Nearby Tools. Make your tools work for you!",
 };

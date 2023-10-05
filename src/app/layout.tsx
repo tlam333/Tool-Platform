@@ -5,9 +5,10 @@ import { sfPro, inter } from "./fonts";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import { Suspense } from "react";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 export const metadata = {
-  title: "Nearby Tools - Tool & Equipment Rental Marketplace",
+  title: "Nearby Tools - and Equipment Rental Marketplace",
   description:
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
   openGraph: {
@@ -25,7 +26,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nearby Tools - Hire tools from your neighbours",
+    title: "Nearby Tools - Hire tools & Equipment from your neighbours",
     description:
       "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
     creator: "@nearbytools",
@@ -41,6 +42,7 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
+      <GoogleAnalytics />
       <body className={cx(sfPro.variable, inter.variable)}>
         <Suspense fallback="...">
           <Nav />

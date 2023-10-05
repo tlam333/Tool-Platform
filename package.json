@@ -42,6 +42,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.14",
     "daisyui": "^3.6.4"
   }
 }
