@@ -1,15 +1,18 @@
 /**This is home page */
-import { Metadata } from "next";
+
 import { Search, Send, HeartHandshake } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import Link from "next/link";
 import ReviewCarousal from "@/components/shared/ReviewCarousal";
+import UserForm from "@/components/tools/forms/UserForm";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const showForm1 = searchParams["showForm1"] ? true : false;
+
   const listToolsWorking = [
     {
       sn: "01",
@@ -69,6 +72,33 @@ export default async function Home({
   ];
   return (
     <>
+      {showForm1 && (
+        <dialog className="modal modal-open" open={showForm1}>
+          <div className="modal-box text-center">
+            <form method="dialog">
+              <Link
+                href={"/"}
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-5"
+              >
+                ✕
+              </Link>
+            </form>
+            <h2 className="font-bold">Get Early Access of Listing!</h2>
+            <p className="py-4">
+              <Balancer>
+                Please fill this form to get early access to Tools and Equipment
+                listings on our platform.
+              </Balancer>
+            </p>
+            <UserForm
+              buttonText="Get Access"
+              redirect="/for-hire?wl=true"
+              interest="Hire Tools"
+            />
+          </div>
+        </dialog>
+      )}
+
       <div className="hero py-10 md:min-h-screen">
         <div className="hero-content text-center">
           <div className="max-w-full">
@@ -103,7 +133,11 @@ export default async function Home({
                 List Tools
               </Link>
 
-              <Link href="/for-hire" className="btn btn-primary md:btn-wide">
+              <Link
+                href="?showForm1=true"
+                scroll={false}
+                className="btn btn-primary md:btn-wide"
+              >
                 Hire Tools
               </Link>
             </div>
@@ -177,7 +211,11 @@ export default async function Home({
                 </>
               ))}
             </div>
-            <Link href="/for-hire" className="btn btn-primary md:btn-wide">
+            <Link
+              href="?showForm1=true"
+              scroll={false}
+              className="btn btn-primary md:btn-wide"
+            >
               Hire Tools
             </Link>
           </div>

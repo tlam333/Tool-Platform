@@ -8,10 +8,6 @@ import { BaseSyntheticEvent } from "react";
 import { useEffect } from "react";
 import Input from "@/components/tools/forms/Input";
 
-// interface Props {
-//   onApplyFilter: (data: any) => void;
-// }
-
 function SearchForm() {
   const router = useRouter();
   //fetch existing search params
@@ -50,7 +46,6 @@ function SearchForm() {
   ) => {
     event?.preventDefault();
 
-    console.log(data);
     let pushUrl = ``;
     if (data.keyword) {
       pushUrl = `&keyword=${data.keyword}`;

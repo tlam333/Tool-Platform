@@ -15,6 +15,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     suburb,
     state,
     postCode,
+    interest,
   }: Partial<User> = await request.json();
   var message = "User created successfully.";
   const res = await fetch(url, {
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
             City: suburb,
             State: state,
             "Post Code": postCode,
+            Interest: interest,
           },
         },
       ],

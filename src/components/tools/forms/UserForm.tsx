@@ -6,11 +6,13 @@ import Loading from "@/components/shared/Loading";
 import Input from "@/components/tools/forms/Input";
 import { createUser } from "@/lib/services/User.services";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface Props {
   buttonText: string;
   setUser?: (user: string) => void;
   redirect?: string;
+  interest?: string;
 }
 const userSchema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
@@ -25,8 +27,14 @@ const userSchema = Yup.object().shape({
     .required("Post code is required"),
   state: Yup.string().required("State is required"),
   country: Yup.string().required("Country is required"),
+  interest: Yup.string(),
 });
-export default function UserForm({ buttonText, setUser, redirect }: Props) {
+export default function UserForm({
+  buttonText,
+  setUser,
+  redirect,
+  interest = "List tools",
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -38,9 +46,16 @@ export default function UserForm({ buttonText, setUser, redirect }: Props) {
     defaultValues: {
       country: "AU",
       state: "VIC",
+      interest: interest,
     },
   });
   const router = useRouter();
+
+  useEffect(() => {
+    if (redirect && window.localStorage.getItem("userId")) {
+      router.push(redirect.split("?")[0]);
+    }
+  }, []);
 
   async function onSubmit(data: any) {
     const res = await createUser(data).then((res) => {
@@ -99,7 +114,7 @@ export default function UserForm({ buttonText, setUser, redirect }: Props) {
           register={register}
           required
         />
-
+        <input type="hidden" {...register("interest")} value={interest} />
         <input type="hidden" {...register("country")} value="AU" />
         <input type="hidden" {...register("state")} value="VIC" />
         <button type="submit" className="btn btn-primary mb-7 col-span-2">

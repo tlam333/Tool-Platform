@@ -48,6 +48,7 @@ type User = {
   country: string;
   createdAt: string;
   updatedAt: string;
+  interest: string;
 };
 
 type FAQ = {
