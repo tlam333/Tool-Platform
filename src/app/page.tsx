@@ -92,7 +92,7 @@ export default async function Home({
             </p>
             <UserForm
               buttonText="Get Access"
-              redirect="/for-hire?wl=true"
+              redirect="/for-hire?newuser=true"
               interest="Hire Tools"
             />
           </div>

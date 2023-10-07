@@ -5,7 +5,7 @@ import { sfPro, inter } from "./fonts";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import { Suspense } from "react";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import GoogleTagManager from "@/components/analytics/GoogleTagManager";
 
 export const metadata = {
   title: "Nearby Tools - and Equipment Rental Marketplace",
@@ -42,8 +42,8 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light">
-      <GoogleAnalytics />
       <body className={cx(sfPro.variable, inter.variable)}>
+        <GoogleTagManager />
         <Suspense fallback="...">
           <Nav />
         </Suspense>

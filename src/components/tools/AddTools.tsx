@@ -18,7 +18,11 @@ export default function AddTools() {
           <h2 className="p-5 text-center">
             Please provide your personal details.
           </h2>
-          <UserForm buttonText={"Next-Add Tools"} setUser={setUser} />
+          <UserForm
+            buttonText={"Next-Add Tools"}
+            setUser={setUser}
+            redirect="?newuser=true"
+          />
         </>
       )}
 
