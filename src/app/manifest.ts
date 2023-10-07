@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Nearby Tools Hire",
+    name: "Nearby Tools",
     short_name: "Nearby Tools",
     description: "Nearby Tools is a marketplace for tools and equipment hire.",
     start_url: "/",
