@@ -6,7 +6,7 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 export default function GoogleTagManager() {
   return (
     <>
-      {process.env.NODE_ENV == "development" && (
+      {process.env.NODE_ENV !== "development" && (
         <>
           <noscript>
             <iframe
