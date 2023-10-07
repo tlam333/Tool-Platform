@@ -8,19 +8,19 @@ import { Suspense } from "react";
 import GoogleTagManager from "@/components/analytics/GoogleTagManager";
 
 export const metadata = {
-  title: "Nearby Tools - and Equipment Rental Marketplace",
+  title: "Nearby Tools and Equipment Rental Marketplace",
   description:
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
   openGraph: {
     type: "website",
     url: "https://nearbytools.com.au",
-    title: "Nearby Tools - Tool & Equipment Rental Marketplace",
+    title: "Nearby Tools and Equipment Rental Marketplace",
     description:
       "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
     siteName: "Nearby Tools",
     images: [
       {
-        url: "https://nearbytools.com.au/icon.png",
+        url: "https://nearbytools.com.au/logo-full.png",
       },
     ],
   },
