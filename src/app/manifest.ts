@@ -16,24 +16,24 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/x-icon",
       },
       {
-        src: "/icons/android-chrome-192x192.png",
+        src: "/android-chrome-192x192.png",
         sizes: "192x192",
         type: "image/png",
       },
       {
-        src: "/icons/android-chrome-512x512.png",
+        src: "/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
       },
       {
-        src: "/icons/apple-icon.png",
+        src: "/apple-icon.png",
         sizes: "180x180",
       },
       {
-        src: "/icons/icon-16x-16.png",
+        src: "/icon-16x-16.png",
       },
       {
-        src: "/icons/icon-32x32.png",
+        src: "/icon-32x32.png",
       },
     ],
   };
