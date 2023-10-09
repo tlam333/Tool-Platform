@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { imageUrl } from "@/lib/constants";
 const apiURL = process.env.AIRTABLE_API_URL;
 const baseId = process.env.BASE_ID;
 import sgMail from "@sendgrid/mail";
@@ -83,16 +84,15 @@ export async function GET(request: NextRequest, response: NextResponse) {
   }
 
   const tools: Tool[] = await records.map((record: any) => ({
-    //id: record.fields["Tool ID"],
     id: record.id,
     name: record.fields["Product Name"],
     brand: record.fields["Brand Name"],
     description: record.fields["Description"],
     rent: record.fields["Rental fee"],
     duration: record.fields["Rental fee duration"],
-    images: record.fields.Images
-      ? Object.assign(record.fields.Images).map((image: any) => image.url)
-      : "",
+    images: record.fields["Image_files"]
+      ?.split(",")
+      .map((image: string) => imageUrl + image),
     location: record.fields["Suburb"],
     category: record.fields["Tool Category"],
     owner: record.fields["Email"],
@@ -131,11 +131,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     process.env.NEXT_PUBLIC_AWS_REGION +
     ".amazonaws.com/";
 
-  const imageList = images
-    ?.toString()
-    .replace(/[\n\r]/g, "")
-    .split(",")
-    .map((image: any) => ({ url: s3bucketUrl + image }));
+  const imageList = images?.toString().replace(/[\n\r]/g, "");
   var message = "Tool created successfully.";
   const res = await fetch(url, {
     method: "POST",
@@ -153,11 +149,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
             "Rental fee": rent,
             "Rental fee duration": duration,
             "Security Deposit": deposit,
-            Images: images
-              ?.toString()
-              .replace(/[\n\r]/g, "")
-              .split(",")
-              .map((image: any) => ({ url: s3bucketUrl + image })),
+            Image_files: imageList,
             "Tool Category": category,
             Email: [owner],
           },

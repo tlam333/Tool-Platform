@@ -24,7 +24,9 @@ export async function GET(req: NextRequest) {
   const fileType = searchParams.get("fileType") || "empty";
 
   const randomID = Math.random() * 10000000;
-  const key = `${randomID}-${encodeURIComponent(fileName)}`;
+  const key = `${randomID}-${encodeURIComponent(
+    fileName.replace(/[\n\r]/g, "")
+  )}`;
 
   const client = new S3Client(s3Configuration);
 

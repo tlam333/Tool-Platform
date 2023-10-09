@@ -63,7 +63,7 @@ function SearchForm() {
         <form onSubmit={handleSubmit(onApplyFilter)}>
           <div className="grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-3">
             <Input
-              name="keword"
+              name="keyword"
               placeholder="Tool or equipment name"
               register={register}
               divClassName="col-span-1"
