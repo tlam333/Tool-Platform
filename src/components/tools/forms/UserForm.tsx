@@ -70,7 +70,7 @@ export default function UserForm({
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} name="user_form">
       <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto px-3 xl:px-0">
         <Input
           name="firstName"

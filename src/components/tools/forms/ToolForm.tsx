@@ -93,7 +93,7 @@ export default function ToolForm({ buttonText, user }: Props) {
   return (
     <>
       {!submitedStatus && (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} name="tool_form">
           <div className="grid grid-cols-1 gap-2 max-w-xl mx-auto px-3 xl:px-0">
             <input type="hidden" value={user} {...register("owner")} />
             <Input

@@ -81,8 +81,7 @@ function BookForm({ tool }: Props) {
     <>
       <div className="mx-auto mt-2 gap-3 text-center">
         {!submitedStatus && (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {/* <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols2"> */}
+          <form onSubmit={handleSubmit(onSubmit)} name="booking_form">
             <div className="grid grid-cols-2 gap-2">
               <input type="hidden" {...register("toolId")} value={tool.id} />
               <input
