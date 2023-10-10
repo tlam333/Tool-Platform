@@ -16,13 +16,9 @@ export default function AddTools() {
       {!user && (
         <>
           <h2 className="p-5 text-center">
-            Please provide your personal details.
+            Please fill your details to start listing your tools!
           </h2>
-          <UserForm
-            buttonText={"Next-Add Tools"}
-            setUser={setUser}
-            redirect="?newuser=true"
-          />
+          <UserForm buttonText={"Next-Add Tools"} setUser={setUser} />
         </>
       )}
 

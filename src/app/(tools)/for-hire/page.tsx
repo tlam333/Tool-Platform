@@ -11,7 +11,7 @@ import NoResultsFound from "@/components/tools/NoResultsFound";
 import Alert from "@/components/shared/Alert";
 
 export const metadata: Metadata = {
-  title: "Nearby Tools - and Equipment for Hire",
+  title: "Nearby Tools and Equipment for Hire",
   description:
     "Hire tools and equipment from communities, individuals and equipment rental stores in your local area.",
   openGraph: {

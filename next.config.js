@@ -32,6 +32,11 @@ const nextConfig = {
         destination: '/for-hire',
         permanent: true,
       },
+      {
+        source: '/list-tools',
+        destination: '/list-for-hire',
+        permanent: true,
+      },
     ]
   },
 };

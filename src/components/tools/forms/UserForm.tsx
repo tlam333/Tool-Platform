@@ -53,7 +53,7 @@ export default function UserForm({
 
   useEffect(() => {
     if (redirect && window.localStorage.getItem("userId")) {
-      router.push(redirect.split("?")[0]);
+      router.push(redirect);
     }
   }, []);
 
