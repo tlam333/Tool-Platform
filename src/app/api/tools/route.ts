@@ -3,7 +3,7 @@ import { imageUrl } from "@/lib/constants";
 const apiURL = process.env.AIRTABLE_API_URL;
 const baseId = process.env.BASE_ID;
 import sgMail from "@sendgrid/mail";
-var url = `${apiURL}/${baseId}/Tools`;
+var airtableApiUrl = `${apiURL}/${baseId}/Tools`;
 
 export async function GET(request: NextRequest, response: NextResponse) {
   const { searchParams } = new URL(request.url);
@@ -26,12 +26,12 @@ export async function GET(request: NextRequest, response: NextResponse) {
    * view:string
    * These parameters need to be URL encoded.
    */
-  var url = `${apiURL}/${process.env.BASE_ID}/Tools?pageSize=${limit}`;
+  var url1 = `${airtableApiUrl}?pageSize=${limit}`;
   if (offset) {
-    url = url + `&offset=${offset}`;
+    url1 = url1 + `&offset=${offset}`;
   }
   if (sortby) {
-    url = url + `&sort[0][field]=${sortby}&sort[0][direction]=desc`;
+    url1 = url1 + `&sort[0][field]=${sortby}&sort[0][direction]=desc`;
   }
 
   var filterByFormula = ``;
@@ -44,12 +44,12 @@ export async function GET(request: NextRequest, response: NextResponse) {
     filterByFormula = `&filterByFormula=FIND('${keyword}'%2C+LOWER(%7BProduct+Name%7D))`;
   }
 
-  url = encodeURI(url);
+  url1 = encodeURI(url1);
   if (filterByFormula) {
-    url = url + `${filterByFormula}`;
+    url1 = url1 + `${filterByFormula}`;
   }
 
-  const res = await fetch(url, {
+  const res = await fetch(url1, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
@@ -124,16 +124,9 @@ export async function POST(request: NextRequest, response: NextResponse) {
     owner,
   }: Partial<Tool> = await request.json();
 
-  const s3bucketUrl =
-    "https://" +
-    process.env.NEXT_PUBLIC_AWS_BUCKET_NAME +
-    ".s3." +
-    process.env.NEXT_PUBLIC_AWS_REGION +
-    ".amazonaws.com/";
-
   const imageList = images?.toString().replace(/[\n\r]/g, "");
   var message = "Tool created successfully.";
-  const res = await fetch(url, {
+  const res = await fetch(airtableApiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

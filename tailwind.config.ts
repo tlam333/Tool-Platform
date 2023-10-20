@@ -22,7 +22,7 @@ const config: Config = {
         light: {
           ...require("daisyui/src/theming/themes")["[data-theme=light]"],
           primary: "#08d4ab",
-          secondary: "#374151",
+          secondary: "#1e2b37",
           success: "#08d4ab",
           "--btn-text-case": "normal-case",
         },

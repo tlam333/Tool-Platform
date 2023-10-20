@@ -5,6 +5,7 @@ export const ToolCategories = [
   "Hand Tools",
   "Gardening",
   "Trailers",
+  "Agricultural",
   "Other",
 ];
 export const RentalPeriods = ["Per Hour", "Per Day", "Per Week", "Per Month"];
@@ -37,3 +38,5 @@ export const imageUrl =
   ".s3." +
   process.env.NEXT_PUBLIC_AWS_REGION +
   ".amazonaws.com/";
+export const stripeFeesPercentage = 0.0175; // 1.75%
+export const stripeFeesFixed = 0.3; // 30 cents

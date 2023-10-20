@@ -115,10 +115,10 @@ export default function ToolForm({ buttonText, user }: Props) {
               radioInput={ToolCategories}
               required
             />
-            <Input name="rent" label="Rent" register={register} required />
+            <Input name="rent" label="Hire rate" register={register} required />
             <RadioInput
               name="duration"
-              label="Rent duration"
+              label="Rate duration"
               register={register}
               radioInput={RentalPeriods}
               required
@@ -218,13 +218,13 @@ export default function ToolForm({ buttonText, user }: Props) {
       {submitedStatus && (
         <div className="mx-auto m-2 gap-3 text-center">
           <Balancer>
-            <CheckCircle size="40" color="#06ffcc" />
+            <CheckCircle size="40" color="#08d4ab" />
           </Balancer>
           <h2 className="font-bold">Tool listed successfully!</h2>
           <br />
           <p>
-            This tool is added successfully. You can add another tool or navgate
-            to view listed tools.
+            This tool is added successfully. You can add another tool or
+            navigate to view listed tools.
           </p>
           <button onClick={submitAnotherTool} className="btn btn-primary mt-5">
             List another tool

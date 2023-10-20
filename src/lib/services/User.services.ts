@@ -14,3 +14,12 @@ export async function createUser(formData: User) {
 
   return res.json();
 }
+
+export async function getUser(id: string) {
+  const res = await fetch(`${apiURL}/users/${id}`);
+  if (!res.ok) {
+    return undefined;
+  }
+
+  return res.json();
+}

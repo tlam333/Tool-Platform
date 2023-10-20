@@ -1,5 +1,3 @@
-import { NextResponse } from "next/server";
-
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getAllTools(searchParams: {
@@ -28,9 +26,7 @@ export async function getAllTools(searchParams: {
 }
 
 export async function getToolById(id: string) {
-  const res = await fetch(`${apiURL}/tools/${id}`, {
-    next: { revalidate: 3600 },
-  });
+  const res = await fetch(`${apiURL}/tools/${id}`);
   if (!res.ok) {
     return undefined;
   }
