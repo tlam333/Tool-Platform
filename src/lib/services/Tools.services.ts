@@ -1,5 +1,3 @@
-import { NextResponse } from "next/server";
-
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getAllTools(searchParams: {
@@ -17,7 +15,7 @@ export async function getAllTools(searchParams: {
     headers: {
       "Content-Type": "application/json",
     },
-    next: { revalidate: 3600 },
+    next: { revalidate: 60 },
     //cache: "no-store",
   });
   if (!res.ok) {
@@ -28,8 +26,21 @@ export async function getAllTools(searchParams: {
 }
 
 export async function getToolById(id: string) {
-  const res = await fetch(`${apiURL}/tools/${id}`, {
-    next: { revalidate: 3600 },
+  const res = await fetch(`${apiURL}/tools/${id}`);
+  if (!res.ok) {
+    return undefined;
+  }
+
+  return res.json();
+}
+
+export async function createTool(formData: Tool) {
+  const res = await fetch(`${apiURL}/tools`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
   });
   if (!res.ok) {
     return undefined;

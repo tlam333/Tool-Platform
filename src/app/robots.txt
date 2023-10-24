@@ -1,0 +1,4 @@
+Sitemap: https://nearbytools.com.au/sitemap.xml
+
+User-agent: *
+Disallow: /api

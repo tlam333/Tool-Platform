@@ -1,37 +1,57 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 interface Props {
   defaultLimit: number;
   total: number;
   nextPage?: string;
+  message?: string;
 }
 
-function PaginationControls({ defaultLimit, total, nextPage }: Props) {
+function PaginationControls({ defaultLimit, total, nextPage, message }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? defaultLimit.toString();
   const keyword = searchParams.get("keyword") ?? "";
   const location = searchParams.get("location") ?? "";
 
-  //store the page numbr with next page offset in local storage
-  var nextPageList = [{ page, nextPage }];
-  const pages = window.sessionStorage.getItem("nextPageList");
+  const page =
+    message && message.length > 0 ? "1" : searchParams.get("page") ?? "1";
+
+  message = "";
   var keywordLocation = ``;
+  const pages = [];
+  pages[Number(page)] = nextPage;
+  const [nextPageList, setNextPageList] = useState(pages);
+
+  useEffect(() => {
+    const pages = window.sessionStorage.getItem("nextPageList");
+
+    if (pages && pages.length > 0) {
+      let pageData = JSON.parse(pages);
+      pageData[Number(page)] = nextPage;
+
+      setNextPageList(pageData);
+      window.sessionStorage.setItem(
+        "nextPageList",
+        JSON.stringify(nextPageList)
+      );
+    } else {
+      window.sessionStorage.setItem(
+        "nextPageList",
+        JSON.stringify(nextPageList)
+      );
+    }
+  }, [page, nextPage]);
+
   if (keyword) {
     keywordLocation = `&keyword=${keyword}`;
   }
   if (location) {
     keywordLocation = keywordLocation + `&location=${location}`;
   }
-  if (pages) {
-    const pageData = JSON.parse(pages);
-    pageData[Number(page) - 1] = nextPage;
-    nextPageList = pageData;
-  }
-  window.sessionStorage.setItem("nextPageList", JSON.stringify(nextPageList));
 
   const setNextPage = (page: number) => () => {
     router.push(
@@ -44,7 +64,7 @@ function PaginationControls({ defaultLimit, total, nextPage }: Props) {
       router.push(`?${keywordLocation}`);
     } else {
       //fetch the page numbr with next page offset from session storage
-      const prevPageOffset = nextPageList[page - 3];
+      const prevPageOffset = nextPageList[page - 2];
       router.push(
         `?page=${
           page - 1

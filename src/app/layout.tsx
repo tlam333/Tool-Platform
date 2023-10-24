@@ -5,16 +5,30 @@ import { sfPro, inter } from "./fonts";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import { Suspense } from "react";
+import GoogleTagManager from "@/components/analytics/GoogleTagManager";
 
 export const metadata = {
-  title: "NearbyTools - Hire tools from your neighbours",
+  title: "Nearby Tools and Equipment Rental Marketplace",
   description:
-    "Revolutionise the way you access tools with our peer-to-peer platform. Get access to high-quality tools in your area, save money, and contribute to a sustainable lifestyle. Join us today!",
+    "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
+  openGraph: {
+    type: "website",
+    url: "https://nearbytools.com.au",
+    title: "Nearby Tools and Equipment Rental Marketplace",
+    description:
+      "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
+    siteName: "Nearby Tools",
+    images: [
+      {
+        url: "https://nearbytools.com.au/logo-full.png",
+      },
+    ],
+  },
   twitter: {
     card: "summary_large_image",
-    title: "NearbyTools - Hire tools from your neighbours",
+    title: "Nearby Tools - Hire tools & Equipment from your neighbours",
     description:
-      "Revolutionise the way you access tools with our peer-to-peer platform. Get access to high-quality tools in your area, save money, and contribute to a sustainable lifestyle. Join us today!",
+      "A platform for renting tools and equipment from your neighbors. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!",
     creator: "@nearbytools",
   },
   metadataBase: new URL("https://nearbytools.com.au"),
@@ -29,8 +43,7 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body className={cx(sfPro.variable, inter.variable)}>
-        {/* <div className="fixed h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-cyan-100" /> */}
-        {/* <div className="fixed h-screen w-full" /> */}
+        <GoogleTagManager />
         <Suspense fallback="...">
           <Nav />
         </Suspense>

@@ -9,7 +9,7 @@ export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
 
 export async function fetcher<JSON = any>(
   input: RequestInfo,
-  init?: RequestInit,
+  init?: RequestInit
 ): Promise<JSON> {
   const res = await fetch(input, init);
 
@@ -60,4 +60,14 @@ export function capitalize(str: string) {
 export const truncate = (str: string, length: number) => {
   if (!str || str.length <= length) return str;
   return `${str.slice(0, length)}...`;
+};
+
+import { stripeFeesFixed, stripeFeesPercentage } from "./constants";
+
+export const calculateStripeFee = (pGaol: number) => {
+  if (pGaol <= 0) return { total: 0, stripeFee: 0 };
+  const pCharge = (pGaol + stripeFeesFixed) / (1 - stripeFeesPercentage);
+  const stripeFee = parseFloat((pCharge - pGaol).toFixed(2));
+
+  return { total: pCharge.toFixed(2), stripeFee: stripeFee };
 };

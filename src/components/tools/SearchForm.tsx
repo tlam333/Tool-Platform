@@ -1,14 +1,12 @@
 "use client";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Loading from "@/components/shared/Loading";
 import { useRouter, useSearchParams } from "next/navigation";
 import { BaseSyntheticEvent } from "react";
-
-// interface Props {
-//   onApplyFilter: (data: any) => void;
-// }
+import { useEffect } from "react";
+import Input from "@/components/tools/forms/Input";
 
 function SearchForm() {
   const router = useRouter();
@@ -25,19 +23,20 @@ function SearchForm() {
     suburb: Yup.string(),
   });
 
-  const { register, handleSubmit, reset, formState, control } = useForm({
+  const { register, handleSubmit, reset, formState } = useForm({
     shouldUseNativeValidation: true,
     mode: "onChange",
     resolver: yupResolver(searchFormSchema),
-    defaultValues: {
+  });
+  const { isSubmitting } = formState;
+
+  useEffect(() => {
+    reset({
       keyword: keyword,
       suburb: location,
-    },
-  });
+    });
+  }, [keyword, location]);
 
-  const { errors } = formState;
-  const { isSubmitting } = formState;
-  //const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data);
   const onApplyFilter = async (
     data: {
       keyword?: string | undefined;
@@ -46,8 +45,7 @@ function SearchForm() {
     event?: BaseSyntheticEvent
   ) => {
     event?.preventDefault();
-    //await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+
     let pushUrl = ``;
     if (data.keyword) {
       pushUrl = `&keyword=${data.keyword}`;
@@ -58,31 +56,25 @@ function SearchForm() {
       //pushUrl = pushUrl + `&location=${(data.suburb).replace(/\s/g, '')}`;
     }
     router.push(`?${pushUrl}`);
-    //reset();
   };
   return (
     <>
       <div className="mx-auto mb-10 mt-10 gap-3 text-center max-w-5xl">
         <form onSubmit={handleSubmit(onApplyFilter)}>
           <div className="grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-3">
-            <div className="col-span-1">
-              <input
-                className="focus:shadow-outline mb-5 w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                placeholder="Search for tools"
-                {...register("keyword")}
-              />
-              <div className="invalid-feedback">
-                {/* {errors.keyword?.message} */}
-              </div>
-            </div>
-            <div className="col-span-1">
-              <input
-                className="focus:shadow-outline mb-5 w-full appearance-none rounded border px-3 py-3 leading-tight text-gray-700 shadow focus:outline-none"
-                placeholder="Choose a suburb"
-                {...register("suburb")}
-              />
-              {/* <div className="invalid-feedback">{errors.suburb?.message}</div> */}
-            </div>
+            <Input
+              name="keyword"
+              placeholder="Tool or equipment name"
+              register={register}
+              divClassName="col-span-1"
+            />
+            <Input
+              name="suburb"
+              placeholder="Suburb name"
+              register={register}
+              divClassName="col-span-1"
+            />
+
             <div className="col-span-1">
               <button className="btn btn-primary">
                 {isSubmitting ? <Loading /> : "Search"}

@@ -2,10 +2,9 @@
 import Image from "next/image";
 import { ToolPlaceholderImg } from "@/lib/constants";
 import { MapPin } from "lucide-react";
+import Link from "next/link";
 import { truncate } from "@/lib/utils";
 import { useState } from "react";
-import BookForm from "./BookForm";
-import PopOver from "../shared/PopOver";
 interface Props {
   tool: Tool;
 }
@@ -14,6 +13,8 @@ function DisplayTool({ tool }: Props) {
     tool.images.length > 0 && tool.images[0].length > 0
       ? tool.images[0]
       : ToolPlaceholderImg;
+
+  const urlPath = tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-"));
 
   const maxLen = 260;
 
@@ -28,70 +29,68 @@ function DisplayTool({ tool }: Props) {
 
   return (
     <>
-      <PopOver
-        id={tool.id}
-        heading={`Request to book - ${tool.name}`}
-        subheading="Please fill this form to send a request to the owner!"
-      >
-        <BookForm tool={tool} />
-      </PopOver>
-      <div className="card lg:card-side bg-base-100 shadow-xl hover:bg-white/50 card-bordered border-slate-200">
-        <figure className="min-w-[256px] max-w-[512px]">
-          <Image
-            src={image}
-            // className="min-w-[256px] max-w-[512px]"
-            width={256}
-            height={256}
-            style={{ maxWidth: "256px", height: "auto" }}
-            placeholder="blur"
-            //sizes="100vw"
-            blurDataURL={
-              "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P/+EQAFxwLSC8o+/gAAAABJRU5ErkJggg=="
-            }
-            alt={tool.name + "-image"}
-          ></Image>
-        </figure>
+      <Link href={`/for-hire/${urlPath}`}>
+        <div className="card lg:card-side bg-base-100 shadow-xl hover:bg-white/50 card-bordered border-slate-200">
+          <figure className="min-w-[256px] max-w-[512px]">
+            <Image
+              src={image}
+              // className="min-w-[256px] max-w-[512px]"
+              width={256}
+              height={256}
+              style={{ maxWidth: "256px", height: "auto" }}
+              placeholder="blur"
+              //sizes="100vw"
+              blurDataURL={
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P/+EQAFxwLSC8o+/gAAAABJRU5ErkJggg=="
+              }
+              alt={tool.name + "-image"}
+            ></Image>
+          </figure>
 
-        <div className="card-body justify-between ">
-          <h2 className="card-title">
-            {truncate(tool.name, 30)} ${tool.rent} {tool.duration}
-          </h2>
-          <div className="flex space-x-5 items-center">
-            <p>
-              {tool.category} by {tool.brand}
-            </p>
-          </div>
-          <div className="my-2 inline-block align-middle">
-            <p className="text-sm text-gray-600 ">
-              {!readMore && (
-                <>
-                  {truncate(tool.description, maxLen)}
-                  {tool.description.length > maxLen && (
-                    <button
-                      onClick={() => setReadMore(true)}
-                      className="text-blue-600"
-                    >
-                      read more
-                    </button>
-                  )}
-                </>
-              )}
-              {readMore && tool.description}
-            </p>
-          </div>
-          <div className="card-actions justify-between align-bottom">
+          <div className="card-body justify-between ">
+            <h2 className="card-title">
+              {truncate(tool.name, 30)} ${tool.rent} {tool.duration}
+            </h2>
             <div className="flex space-x-5 items-center">
               <p>
-                <MapPin color="#0078d4" />
+                {tool.category} by {tool.brand}
               </p>
-              <p className="text-lg">{tool.location}</p>
             </div>
-            <button className="btn btn-primary" onClick={() => showBookForm()}>
+            <div className="my-2 inline-block align-middle">
+              <p className="text-sm text-gray-600 ">
+                {!readMore && (
+                  <>
+                    {truncate(tool.description, maxLen)}
+                    {tool.description.length > maxLen && (
+                      <button
+                        onClick={() => setReadMore(true)}
+                        className="text-blue-600"
+                      >
+                        read more
+                      </button>
+                    )}
+                  </>
+                )}
+                {readMore && tool.description}
+              </p>
+            </div>
+            <div className="card-actions justify-between align-bottom">
+              <div className="flex space-x-5 items-center">
+                <p>
+                  <MapPin color="#0078d4" />
+                </p>
+                <p className="text-lg">{tool.location}</p>
+              </div>
+              {/* <button className="btn btn-primary" onClick={() => showBookForm()}>
               Hire Now
-            </button>
+            </button> */}
+              {/* <Link href={`/for-hire/${tool.id}`} className="btn btn-secondary">
+                View Details
+              </Link> */}
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }

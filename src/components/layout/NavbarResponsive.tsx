@@ -2,14 +2,36 @@
 import useScroll from "@/lib/hooks/use-scroll";
 import Image from "next/image";
 import Link from "next/link";
-import { Search, PlusCircle, User, AlignJustify } from "lucide-react";
+import {
+  Search,
+  PlusCircle,
+  User,
+  AlignJustify,
+  HelpCircle,
+} from "lucide-react";
 
 const NavbarResponsive = () => {
   const scrolled = useScroll(50);
   const MenuItems = [
-    { name: "List Tools", link: "/", icon: <PlusCircle /> },
-    { name: "Find Tools", link: "/for-rent", icon: <Search /> },
+    {
+      name: "List Tools",
+      link: "/list-for-hire",
+      icon: <PlusCircle />,
+      className: "btn btn-cta",
+    },
+    {
+      name: "Hire Tools",
+      link: "/for-rent",
+      icon: <Search />,
+      className: "btn btn-ghost",
+    },
     // { name: "Others", link: "/", icon: <User /> },
+    {
+      name: "FAQ",
+      link: "/faq",
+      icon: <HelpCircle />,
+      className: "btn btn-ghost",
+    },
   ];
   return (
     <div
@@ -20,9 +42,9 @@ const NavbarResponsive = () => {
       } z-30 transition-all`}
     >
       <div className="navbar max-w-screen-xl justify-between bg-base-100">
-        <div className="navbar-start">
+        <div className="navbar-start w-3/4">
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost md:hidden">
               <AlignJustify />
             </label>
             <ul
@@ -31,10 +53,13 @@ const NavbarResponsive = () => {
             >
               {MenuItems.map((item) => {
                 return (
-                  <li key={item.name + "mobile"}>
+                  <li
+                    key={item.name + "mobile"}
+                    className="content-between my-2"
+                  >
                     <Link
                       href={item.link}
-                      className="flex items-center font-display text-xl normal-case"
+                      className={`text-xl normal-case ${item.className}`}
                     >
                       {item.icon} <p>{item.name}</p>
                     </Link>
@@ -44,28 +69,29 @@ const NavbarResponsive = () => {
             </ul>
           </div>
           {/* Website logo */}
-          <div className="mx-2 flex-1 px-2">
-            <Link href="/" className="flex items-center font-display text-2xl">
+          <div className="mx-2 px-2">
+            <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo-full.png"
                 alt="nearbytools logo"
-                width="44"
-                height="44"
+                width="300"
+                height="85"
                 className="mr-2 rounded-sm"
+                style={{ width: "auto" }}
+                priority={true}
               ></Image>
-              <h2>Nearby Tools</h2>
             </Link>
           </div>
         </div>
         {/* Desktop menu only shows for lg and up devices */}
-        <div className="hidden flex-none lg:block">
+        <div className="hidden flex-none md:block">
           <ul className="menu menu-horizontal px-1">
             {MenuItems.map((item) => {
               return (
                 <li key={item.name} className="mx-1">
                   <Link
                     href={item.link}
-                    className="flex items-center font-display text-xl normal-case hover:text-blue-500"
+                    className={`flex items-center ${item.className}`}
                   >
                     {item.icon} <p>{item.name}</p>
                   </Link>
