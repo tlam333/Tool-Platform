@@ -13,7 +13,10 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const toolData = getToolById(params.id);
+  const urlPath = params.id;
+  const id = urlPath.split("-")[0];
+
+  const toolData = getToolById(id);
   const { error, tool } = await toolData;
   if (error == "NOT_FOUND") {
     return { title: "Product not found!" };
@@ -36,7 +39,7 @@ export async function generateMetadata({
           metadata.openGraph?.description?.toString().replace(/`/g, "\\`") +
           "`"
       ),
-      url: metadata.openGraph?.url,
+      url: "https://nearbytools.com.au/for-hire/" + urlPath,
       images: [{ url: tool.images[0] }],
     },
   };
@@ -49,7 +52,9 @@ export default async function ToolDetailsPage({
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const toolData = getToolById(params.id);
+  const urlPath = params.id;
+  const id = urlPath.split("-")[0];
+  const toolData = getToolById(id);
   const { error, tool } = await toolData;
 
   if (error == "NOT_FOUND") {

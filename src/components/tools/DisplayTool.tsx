@@ -14,6 +14,8 @@ function DisplayTool({ tool }: Props) {
       ? tool.images[0]
       : ToolPlaceholderImg;
 
+  const urlPath = tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-"));
+
   const maxLen = 260;
 
   const [readMore, setReadMore] = useState(false);
@@ -27,7 +29,7 @@ function DisplayTool({ tool }: Props) {
 
   return (
     <>
-      <Link href={`/for-hire/${tool.id}`}>
+      <Link href={`/for-hire/${urlPath}`}>
         <div className="card lg:card-side bg-base-100 shadow-xl hover:bg-white/50 card-bordered border-slate-200">
           <figure className="min-w-[256px] max-w-[512px]">
             <Image
