@@ -78,9 +78,9 @@ export default async function ToolDetailsPage({
         },
       "offers": {
         "@type": "Offer",
-        "price": ${tool.rent} ${tool.duration},
+        "price": ${tool.rent},
         "priceCurrency": "AUD",
-        "availability": "https://schema.org/InStock",
+        "availability": "https://schema.org/InStock"
       }
     }`,
   };
