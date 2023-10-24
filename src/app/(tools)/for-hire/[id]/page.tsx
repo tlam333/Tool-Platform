@@ -6,6 +6,7 @@ import { MapPin } from "lucide-react";
 import Image from "next/image";
 import Balancer from "react-wrap-balancer";
 import HireForm from "@/components/tools/forms/HireForm";
+import { getMetadata } from "@/lib/services/Seo.services";
 
 export async function generateMetadata({
   params,
@@ -17,9 +18,27 @@ export async function generateMetadata({
   if (error == "NOT_FOUND") {
     return { title: "Product not found!" };
   }
+  const { name, location, category, rent, duration } = tool;
+  const metadata = await getMetadata("/for-hire/id", category);
+
   return {
-    title: `${tool.name} for hire in ${tool.location}`,
-    description: tool.description,
+    title: eval("`" + metadata.title?.toString().replace(/`/g, "\\`") + "`"),
+    description: eval(
+      "`" + metadata.description?.toString().replace(/`/g, "\\`") + "`"
+    ),
+    openGraph: {
+      siteName: metadata.openGraph?.siteName,
+      title: eval(
+        "`" + metadata.openGraph?.title?.toString().replace(/`/g, "\\`") + "`"
+      ),
+      description: eval(
+        "`" +
+          metadata.openGraph?.description?.toString().replace(/`/g, "\\`") +
+          "`"
+      ),
+      url: metadata.openGraph?.url,
+      images: [{ url: tool.images[0] }],
+    },
   };
 }
 

@@ -2,8 +2,14 @@ import { Metadata } from "next";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function getMetadata(urlPath: string): Promise<Metadata> {
-  const payloadUrl = `${apiURL}/cms/seo?url=${urlPath}`;
+export async function getMetadata(
+  urlPath: string,
+  category?: string
+): Promise<Metadata> {
+  var payloadUrl = `${apiURL}/cms/seo?pageUrl=${urlPath}`;
+  if (category) {
+    payloadUrl = `${payloadUrl}&category=${encodeURI(category)}`;
+  }
   var metadata: Metadata = {};
   const defaultTitle = "Nearby Tools - Tool & Equipment Rental Marketplace";
   const defaultDescription =
@@ -23,14 +29,14 @@ export async function getMetadata(urlPath: string): Promise<Metadata> {
       if (data) {
         metadata = {
           title: data?.title || defaultTitle,
-          description: data.description || defaultDescription,
+          description: data?.description || defaultDescription,
           openGraph: {
-            type: data.ogType || ogType,
-            siteName: data.siteName || siteName,
-            title: data.ogTitle || ogTitle,
-            description: data.ogDescription || ogDescription,
-            url: data.ogUrl || ogUrl,
-            //images: [{ url: data.ogImage || ogImagesUrl }],
+            type: data?.ogType || ogType,
+            siteName: data?.siteName || siteName,
+            title: data?.ogTitle || ogTitle,
+            description: data?.ogDescription || ogDescription,
+            url: data?.ogUrl || ogUrl,
+            images: [{ url: data.ogImage || ogImagesUrl }],
           },
         };
       }
