@@ -9,25 +9,12 @@ import { Suspense } from "react";
 import { getAllTools } from "@/lib/services/Tools.services";
 import NoResultsFound from "@/components/tools/NoResultsFound";
 import Alert from "@/components/shared/Alert";
+import { getMetadata } from "@/lib/services/Seo.services";
 
-export const metadata: Metadata = {
-  title: "Nearby Tools and Equipment for Hire",
-  description:
-    "Hire tools and equipment from communities, individuals and equipment rental stores in your local area.",
-  openGraph: {
-    type: "website",
-    url: "https://nearbytools.com.au/for-hire",
-    title: "Nearby Tools - Tool & Equipment Rental Marketplace",
-    description:
-      "Hire tools and equipment from communities, individuals and equipment rental stores in your local area.",
-    siteName: "Nearby Tools",
-    images: [
-      {
-        url: "https://nearbytools.com.au/icon.png",
-      },
-    ],
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const metadata: Metadata = await getMetadata("/for-hire");
+  return metadata;
+}
 
 export default async function FindTools({
   searchParams,

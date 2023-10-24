@@ -9,18 +9,10 @@ interface Props {
   user?: string;
 }
 
-export const metadata: Metadata = {
-  title: "Nearby Tools - and Equipment List For Hire",
-  description:
-    "List your tools and equipment for hire on Nearby Tools. Make your tools work for you!",
-};
-
-//export const metadat: Promise<Metadata> = getMetadata("/list-for-hire");
-
-// export async function generateMetadata(): Promise<Metadata> {
-//   const metadata: Metadata = await getMetadata("/list-for-hire");
-//   return metadata;
-// }
+export async function generateMetadata(): Promise<Metadata> {
+  const metadata: Metadata = await getMetadata("/list-for-hire");
+  return metadata;
+}
 
 export default async function ListForHire({
   searchParams,

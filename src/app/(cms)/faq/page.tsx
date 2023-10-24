@@ -1,11 +1,12 @@
 import { getAllFaq } from "@/lib/services/cms.services";
 import Script from "next/script";
+import type { Metadata } from "next";
+import { getMetadata } from "@/lib/services/Seo.services";
 
-export const metadata = {
-  title: "Help and support - Nearby Tools",
-  description:
-    "Find answers to your questions about Nearby Tools. Feel free to contact us if you can't find what you're looking for.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const metadata: Metadata = await getMetadata("/faq");
+  return metadata;
+}
 
 export default async function Faq() {
   var rederFaq = "";

@@ -11,17 +11,17 @@ export async function getMetadata(
     payloadUrl = `${payloadUrl}&category=${encodeURI(category)}`;
   }
   var metadata: Metadata = {};
-  const defaultTitle = "Nearby Tools - Tool & Equipment Rental Marketplace";
+  const defaultTitle = "Nearby Tools and Equipment Rental Marketplace";
   const defaultDescription =
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!";
 
   const ogType = "website";
-  const ogUrl = "https://nearbytools.com.au";
-  const ogTitle = "Nearby Tools - Tool & Equipment Rental Marketplace";
+  const ogUrl = "https://nearbytools.com.au" + urlPath;
+  const ogTitle = "Nearby Tools and Equipment Rental Marketplace";
   const ogDescription =
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!";
   const siteName = "Nearby Tools";
-  const ogImagesUrl = "https://nearbytools.com.au/icon.png";
+  const ogImagesUrl = "https://nearbytools.com.au/logo-full.png";
 
   await fetch(payloadUrl)
     .then((res) => res.json())
