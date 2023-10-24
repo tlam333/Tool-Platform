@@ -82,7 +82,7 @@ export default async function Home({
       "url": "https://nearbytools.com.au",
       "logo": "https://nearbytools.com.au/icon.png",
       "brand": "Nearby Tools",
-      "legalName": "Nearby Tools Pty Ltd",
+      "legalName": "Nearby Tools Pty Ltd"
     }`,
   };
   return (

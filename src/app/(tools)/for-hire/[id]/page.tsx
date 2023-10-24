@@ -68,13 +68,13 @@ export default async function ToolDetailsPage({
     __html: `{
       "@context": "https://schema.org/",
       "@type": "Product",
-      "name": ${tool.name},
-      "image": [${tool.images}],
-      "description": ${tool.description},
-      "sku": ${tool.id},
+      "name": "${tool.name}",
+      "image": [${tool.images.map((image: string) => `"${image}"`)}],
+      "description": "${tool.description?.replace(/[\n\r]/g, " ")}",
+      "sku": "${tool.id}",
       "brand": {
           "@type": "Brand",
-          "name": ${tool.brand}
+          "name": "${tool.brand}"
         },
       "offers": {
         "@type": "Offer",
