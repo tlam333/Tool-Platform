@@ -16,7 +16,7 @@ export async function getMetadata(
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!";
 
   const ogType = "website";
-  const ogUrl = "https://nearbytools.com.au" + urlPath;
+  const ogUrl = `https://nearbytools.com.au${urlPath}`;
   const ogTitle = "Nearby Tools and Equipment Rental Marketplace";
   const ogDescription =
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!";

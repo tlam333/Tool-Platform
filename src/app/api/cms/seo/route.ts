@@ -7,8 +7,6 @@ export async function GET(req: NextRequest) {
   const description =
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!";
 
-  const siteName = "Nearby Tools";
-
   const { searchParams } = new URL(req.url);
   const pageUrl = searchParams.get("pageUrl") || undefined;
   const category = searchParams.get("category") || undefined;
@@ -46,7 +44,6 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     title: metaTitle,
     description: metaDescription,
-    siteName,
     ogTitle: metaTitle,
     ogDescription: metaDescription,
   });
