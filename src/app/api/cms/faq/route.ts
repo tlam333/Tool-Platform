@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 const apiURL = process.env.AIRTABLE_API_URL;
 
