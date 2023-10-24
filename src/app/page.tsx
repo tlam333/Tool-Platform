@@ -6,6 +6,7 @@ import Link from "next/link";
 import ReviewCarousal from "@/components/shared/ReviewCarousal";
 import UserForm from "@/components/tools/forms/UserForm";
 import OpendDialog from "@/components/shared/OpendDialog";
+import Script from "next/script";
 
 export default async function Home({
   searchParams,
@@ -73,6 +74,17 @@ export default async function Home({
         "I have been using NearbyTools for a few weeks now and I am impressed with the quality of tools available. I have saved a bundle on my DIY projects!",
     },
   ];
+
+  const orgJsonLd = {
+    __html: `{
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://nearbytools.com.au",
+      "logo": "https://nearbytools.com.au/icon.png",
+      "brand": "Nearby Tools",
+      "legalName": "Nearby Tools Pty Ltd",
+    }`,
+  };
   return (
     <>
       <OpendDialog
@@ -95,6 +107,11 @@ export default async function Home({
       >
         <UserForm buttonText="Next-Add Tools" redirect="/list-for-hire" />
       </OpendDialog>
+      <Script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={orgJsonLd}
+        id="faq-jsonld"
+      />
 
       <div className="hero py-10 md:min-h-screen">
         <div className="hero-content text-center">

@@ -7,6 +7,7 @@ import Image from "next/image";
 import Balancer from "react-wrap-balancer";
 import HireForm from "@/components/tools/forms/HireForm";
 import { getMetadata } from "@/lib/services/Seo.services";
+import Script from "next/script";
 
 export async function generateMetadata({
   params,
@@ -63,8 +64,34 @@ export default async function ToolDetailsPage({
 
   const hireNow = searchParams["hirenow"] ? true : false;
 
+  const productJsonLd = {
+    __html: `{
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": ${tool.name},
+      "image": [${tool.images}],
+      "description": ${tool.description},
+      "sku": ${tool.id},
+      "brand": {
+          "@type": "Brand",
+          "name": ${tool.brand}
+        },
+      "offers": {
+        "@type": "Offer",
+        "price": ${tool.rent} ${tool.duration},
+        "priceCurrency": "AUD",
+        "availability": "https://schema.org/InStock",
+      }
+    }`,
+  };
+
   return (
     <>
+      <Script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={productJsonLd}
+        id="faq-jsonld"
+      />
       <div className="px-2 md:mt-10 lg:px-10 xl:px-20 w-full min-h-screen mx-auto max-w-6xl">
         <div className="text-lg breadcrumbs">
           <ul>
