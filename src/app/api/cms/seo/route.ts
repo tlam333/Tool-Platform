@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
     },
+    next: { tags: [pageUrl || "/"] },
   })
     .then((response) => response.json())
     .catch((err) => console.error(err));

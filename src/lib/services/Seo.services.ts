@@ -23,7 +23,7 @@ export async function getMetadata(
   const siteName = "Nearby Tools";
   const ogImagesUrl = "https://nearbytools.com.au/logo-full.png";
 
-  await fetch(payloadUrl)
+  await fetch(payloadUrl, { next: { tags: [urlPath || "/"] } })
     .then((res) => res.json())
     .then((data) => {
       if (data) {
