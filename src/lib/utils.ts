@@ -71,3 +71,13 @@ export const calculateStripeFee = (pGaol: number) => {
 
   return { total: pCharge.toFixed(2), stripeFee: stripeFee };
 };
+
+export const urlEncodePath = (path: string) => {
+  return encodeURI(
+    path
+      .trim()
+      .replace(/,?\s+/g, "-")
+      .replace(/[^a-zA-Z0-9-_]/g, "-")
+      .toLowerCase()
+  );
+};

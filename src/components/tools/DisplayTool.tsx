@@ -5,6 +5,7 @@ import { MapPin } from "lucide-react";
 import Link from "next/link";
 import { truncate } from "@/lib/utils";
 import { useState } from "react";
+import { urlEncodePath } from "@/lib/utils";
 interface Props {
   tool: Tool;
 }
@@ -14,8 +15,7 @@ function DisplayTool({ tool }: Props) {
       ? tool.images[0]
       : ToolPlaceholderImg;
 
-  const urlPath =
-    tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-").toLowerCase());
+  const urlPath = tool.id + "-" + urlEncodePath(tool.name);
 
   const maxLen = 260;
 
