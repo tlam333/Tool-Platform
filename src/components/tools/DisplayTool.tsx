@@ -14,7 +14,8 @@ function DisplayTool({ tool }: Props) {
       ? tool.images[0]
       : ToolPlaceholderImg;
 
-  const urlPath = tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-"));
+  const urlPath =
+    tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-").toLowerCase());
 
   const maxLen = 260;
 

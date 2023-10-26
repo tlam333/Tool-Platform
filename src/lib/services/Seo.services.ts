@@ -42,7 +42,14 @@ export async function getMetadata(
       }
     })
     .catch((err) => {
-      console.error("error setting metadat for page - ", urlPath, " ", err);
+      console.error(
+        "error setting metadat for page & Category- ",
+        urlPath,
+        " ",
+        category,
+        " ",
+        err
+      );
     });
 
   return metadata;

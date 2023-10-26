@@ -8,8 +8,8 @@ export async function GET(req: NextRequest) {
     "A platform for renting tools and equipment from your neighbours. For a cost-effective, sustainable solutions to your projects & DIY, Join the sharing revolution today!";
 
   const { searchParams } = new URL(req.url);
-  const pageUrl = searchParams.get("pageUrl") || undefined;
-  const category = searchParams.get("category") || undefined;
+  const pageUrl = searchParams.get("pageUrl") || null;
+  const category = searchParams.get("category") || null;
   var filterByFormula = ``;
   if (pageUrl && category) {
     filterByFormula = `filterByFormula=AND(LOWER('${pageUrl}')%3DLOWER(pageUrl)%2C+LOWER('${category}')%3DLOWER(category))`;
@@ -36,9 +36,16 @@ export async function GET(req: NextRequest) {
     .then((response) => response.json())
     .catch((err) => console.error(err));
 
-  const records = await res.records;
-
   const error = await res.error;
+  if (error) {
+    console.error(error);
+    return NextResponse.json({
+      title,
+      description,
+    });
+  }
+
+  const records = await res.records;
 
   const { title: metaTitle, metaDescription } = await records[0].fields;
 

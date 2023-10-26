@@ -211,9 +211,9 @@ export default async function ToolDetailsPage({
 //this portion forces startic generation of all tools pages
 // export async function generateStaticParams() {
 //   const toolsPage: Promise<ToolsPage> = getAllTools({ limit: "100" });
-//   const { tools, total, nextPage, message } = await toolsPage;
+//   const { tools } = await toolsPage;
 
 //   return tools.map((tool) => {
-//     id: tool.id;
+//     id: tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-").toLowerCase());
 //   });
 // }
