@@ -40,18 +40,22 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
-        //@ts-ignore
-        session.user.id = token.id;
+        session.user.id = token.id as string;
+        session.user.complete = token.complete as boolean;
       }
       return session;
     },
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         token.accessToken = account.access_token;
       }
       if (user) {
         token.id = user.id;
+        token.complete = false;
+      }
+      if (trigger === "update") {
+        token.complete = true;
       }
       return token;
     },

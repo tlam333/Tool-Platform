@@ -13,7 +13,6 @@ export default function SignInComponent({ redirect }: Props) {
   const [signInClickedGm, setSignInClickedGm] = useState(false);
   const [signInClickedFb, setSignInClickedFb] = useState(false);
   const { data: session } = useSession();
-  console.log("session", session);
   const router = useRouter();
   if (session && redirect) {
     router.push(redirect);
