@@ -4,9 +4,11 @@ import { Search, Send, HeartHandshake } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 import Link from "next/link";
 import ReviewCarousal from "@/components/shared/ReviewCarousal";
-import UserForm from "@/components/tools/forms/UserForm";
 import OpendDialog from "@/components/shared/OpendDialog";
 import Script from "next/script";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]/route";
+import SignInComponent from "@/components/tools/forms/SignIn";
 
 export default async function Home({
   searchParams,
@@ -16,6 +18,11 @@ export default async function Home({
   const showForm1 = searchParams["showForm1"] ? true : false;
 
   const showForm2 = searchParams["showForm2"] ? true : false;
+
+  const session = await getServerSession(authOptions);
+
+  const hireLink = session ? "/for-hire" : "?showForm1=true";
+  const listLink = session ? "/list-for-hire" : "?showForm2=true";
 
   const listToolsWorking = [
     {
@@ -91,21 +98,17 @@ export default async function Home({
         showDialog={showForm1}
         closePath="/"
         heading="Get Early Access of Listings!"
-        description="Please fill this form to get early access to Tools and Equipment listings on our platform."
+        description="Access treasure trove of Tools and Equipment listings on our platform."
       >
-        <UserForm
-          buttonText="Get Access"
-          redirect="/for-hire"
-          interest="Hire Tools"
-        />
+        <SignInComponent redirect="/for-hire" />
       </OpendDialog>
       <OpendDialog
         showDialog={showForm2}
         closePath="/"
-        heading="Please fill your details to start listing your tools!"
-        description="Your information is secured with us and  personal details are not shared publicly!"
+        heading="Sign in to start listing tools!"
+        description="Simply sign in using one of the options below and start listing your tools & equipment."
       >
-        <UserForm buttonText="Next-Add Tools" redirect="/list-for-hire" />
+        <SignInComponent redirect="/list-for-hire" />
       </OpendDialog>
       <Script
         type="application/ld+json"
@@ -141,7 +144,7 @@ export default async function Home({
 
             <div className="flex flex-row justify-around max-w-2xl mx-auto">
               <Link
-                href="?showForm2=true"
+                href={listLink}
                 scroll={false}
                 className="btn btn-primary md:btn-wide"
               >
@@ -149,7 +152,7 @@ export default async function Home({
               </Link>
 
               <Link
-                href="?showForm1=true"
+                href={hireLink}
                 scroll={false}
                 className="btn btn-primary md:btn-wide"
               >
@@ -192,7 +195,7 @@ export default async function Home({
               ))}
             </div>
             <Link
-              href="?showForm2=true"
+              href={listLink}
               scroll={false}
               className="btn btn-primary md:btn-wide"
             >
@@ -231,7 +234,7 @@ export default async function Home({
               ))}
             </div>
             <Link
-              href="?showForm1=true"
+              href={hireLink}
               scroll={false}
               className="btn btn-primary md:btn-wide"
             >
