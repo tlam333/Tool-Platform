@@ -30,6 +30,9 @@ export async function getMetadata(
         metadata = {
           title: data?.title || defaultTitle,
           description: data?.description || defaultDescription,
+          alternates: {
+            canonical: data?.canonical || ogUrl,
+          },
           openGraph: {
             type: data?.ogType || ogType,
             siteName: data?.siteName || siteName,

@@ -6,6 +6,9 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import { Suspense } from "react";
 import GoogleTagManager from "@/components/analytics/GoogleTagManager";
+import Provider from "@/app/context/ClientProvider";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata = {
   title: "Nearby Tools and Equipment Rental Marketplace",
@@ -40,16 +43,19 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en" data-theme="light">
       <body className={cx(sfPro.variable, inter.variable)}>
         <GoogleTagManager />
-        <Suspense fallback="...">
-          <Nav />
-        </Suspense>
-        <main className="flex min-h-screen w-full flex-col items-center justify-center pt-20 ">
-          {children}
-        </main>
+        <Provider session={session}>
+          <Suspense fallback="...">
+            <Nav />
+          </Suspense>
+          <main className="flex min-h-screen w-full flex-col items-center justify-center pt-20 ">
+            {children}
+          </main>
+        </Provider>
         <Footer />
         {/* <Analytics /> */}
       </body>

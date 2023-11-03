@@ -18,6 +18,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     state,
     postCode,
     interest,
+    image,
   }: Partial<User> = await request.json();
   var message = "User created successfully.";
   const res = await fetch(url, {
@@ -42,6 +43,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
             State: state,
             "Post Code": postCode,
             Interest: interest,
+            image: image,
           },
         },
       ],
@@ -96,8 +98,9 @@ export async function POST(request: NextRequest, response: NextResponse) {
 export async function GET(request: NextRequest, response: NextResponse) {
   const { searchParams } = new URL(request.url);
   const userIds = searchParams.get("userIds") || undefined;
+  const email = searchParams.get("email") || undefined;
 
-  const res = await getUsers(userIds);
+  const res = await getUsers(userIds, email);
 
   const { error } = await res;
   if (error) {
@@ -110,25 +113,28 @@ export async function GET(request: NextRequest, response: NextResponse) {
   return NextResponse.json({ users: users });
 }
 
-async function getUsers(userIds?: string) {
-  if (!userIds) {
-    return { error: "No user ids provided." };
+async function getUsers(userIds?: string, email?: string) {
+  if (!userIds && !email) {
+    return { error: "No user ids or emails provided." };
   }
   const fieldList = ["Email", "First+Name", "Last+Name", "Phone", "City"];
   const encodedFields = fieldList.map((field) => "&fields[]=" + field);
 
-  const url1 = encodeURI(`${url}?${encodedFields.join("")}`);
+  var url1 = encodeURI(`${url}?${encodedFields.join("")}`);
 
-  const res = await fetch(
-    `${url1}&filterByFormula=SEARCH(RECORD_ID()%2C+%22${userIds}%22)`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
-      },
-    }
-  )
+  if (email) {
+    url1 = `${url1}&filterByFormula=SEARCH(%22${email}%22%2C+Email)`;
+  } else if (userIds) {
+    url1 = `${url1}&filterByFormula=SEARCH(RECORD_ID()%2C+%22${userIds}%22)`;
+  }
+
+  const res = await fetch(url1, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+    },
+  })
     .then((response) => response.json())
     .catch((err) => console.error(err));
   const { error } = await res;

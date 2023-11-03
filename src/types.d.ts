@@ -58,6 +58,7 @@ type User = {
   updatedAt: string;
   interest: string;
   stripeId: string;
+  image: string;
 };
 
 type FAQ = {
