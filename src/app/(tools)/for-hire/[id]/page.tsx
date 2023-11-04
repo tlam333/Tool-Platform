@@ -126,7 +126,7 @@ export default async function ToolDetailsPage({
                     blurDataURL={
                       "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P/+EQAFxwLSC8o+/gAAAABJRU5ErkJggg=="
                     }
-                  />
+                  ></Image>
                 </div>
                 {tool.images.length > 1 &&
                   tool.images?.map((image: string, index: number) => (
