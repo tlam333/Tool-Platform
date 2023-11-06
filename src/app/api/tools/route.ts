@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { imageUrl } from "@/lib/constants";
 const apiURL = process.env.AIRTABLE_API_URL;
 const baseId = process.env.BASE_ID;
-import sgMail from "@sendgrid/mail";
 var airtableApiUrl = `${apiURL}/${baseId}/Tools`;
+import { revalidatePath } from "next/cache";
 
 export async function GET(request: NextRequest, response: NextResponse) {
   const { searchParams } = new URL(request.url);
@@ -155,6 +155,62 @@ export async function POST(request: NextRequest, response: NextResponse) {
       console.error(err);
       message = err;
     });
+  return NextResponse.json({
+    message: message,
+    id: res?.records[0]?.id,
+  });
+}
+
+/**update tools*/
+export async function PUT(request: NextRequest, response: NextResponse) {
+  const {
+    id,
+    name,
+    brand,
+    description,
+    rent,
+    duration,
+    deposit,
+    images,
+    category,
+    owner,
+  }: Partial<Tool> = await request.json();
+
+  const imageList = images?.toString().replace(/[\n\r]/g, "");
+  var message = "Tool updated successfully.";
+  const res = await fetch(airtableApiUrl, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+    },
+    body: JSON.stringify({
+      records: [
+        {
+          id: id,
+          fields: {
+            "Product Name": name,
+            "Brand Name": brand,
+            Description: description,
+            "Rental fee": rent,
+            "Rental fee duration": duration,
+            "Security Deposit": deposit,
+            Image_files: imageList,
+            "Tool Category": category,
+            Email: [owner],
+          },
+        },
+      ],
+    }),
+  })
+    .then((response) => response.json())
+    .catch((err) => {
+      console.error(err);
+      message = err;
+    });
+
+  //revalidate the cache for this product
+  revalidatePath("/for-hire/" + id);
   return NextResponse.json({
     message: message,
     id: res?.records[0]?.id,

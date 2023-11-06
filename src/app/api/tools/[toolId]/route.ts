@@ -27,6 +27,7 @@ export async function getToolData(toolId: string) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
     },
+    next: { tags: [toolId] },
   })
     .then((response) => response.json())
     .catch((err) => console.error(err));

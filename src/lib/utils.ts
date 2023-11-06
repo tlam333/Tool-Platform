@@ -71,3 +71,22 @@ export const calculateStripeFee = (pGaol: number) => {
 
   return { total: pCharge.toFixed(2), stripeFee: stripeFee };
 };
+
+export const urlEncodePath = (path: string) => {
+  return encodeURI(
+    path
+      .trim()
+      .replace(/,?\s+/g, "-")
+      .replace(/[^a-zA-Z0-9-_]/g, "-")
+      .toLowerCase()
+  );
+};
+
+export const processRichText = (text: string): string => {
+  //replace bold text
+  var outText = text.replaceAll("\n**", "\n<b>").replaceAll("**\n", "</b>\n");
+  return outText;
+  //handle italics
+
+  //handle internal links
+};

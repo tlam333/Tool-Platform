@@ -26,7 +26,7 @@ export async function getAllTools(searchParams: {
 }
 
 export async function getToolById(id: string) {
-  const res = await fetch(`${apiURL}/tools/${id}`);
+  const res = await fetch(`${apiURL}/tools/${id}`, { next: { tags: [id] } });
   if (!res.ok) {
     return undefined;
   }
