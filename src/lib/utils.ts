@@ -81,3 +81,12 @@ export const urlEncodePath = (path: string) => {
       .toLowerCase()
   );
 };
+
+export const processRichText = (text: string): string => {
+  //replace bold text
+  var outText = text.replaceAll("\n**", "\n<b>").replaceAll("**\n", "</b>\n");
+  return outText;
+  //handle italics
+
+  //handle internal links
+};

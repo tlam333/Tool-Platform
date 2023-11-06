@@ -30,10 +30,10 @@ export default function Footer() {
         <Link className="link link-hover" href="#">
           About
         </Link>
-        <Link className="link link-hover" href="#">
+        <Link className="link link-hover" href="/terms-of-use">
           Terms of use
         </Link>
-        <Link className="link link-hover" href="#">
+        <Link className="link link-hover" href="/privacy">
           Privacy
         </Link>
       </nav>
