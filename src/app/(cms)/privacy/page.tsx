@@ -22,7 +22,7 @@ export default async function Privacy() {
   return (
     <div className="px-2 md:px-2 lg:px-10 xl:px-20 w-full min-h-screen">
       <div className="mx-auto max-w-5xl py-10">
-        <h1 className="py-5">{heading}</h1>
+        <h1 className="py-5 text-2xl">{heading}</h1>
         <div className="m-2 md:mx-5 lg:mx-0">
           <div
             style={{ whiteSpace: "pre-wrap" }}
