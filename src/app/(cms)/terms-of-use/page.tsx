@@ -1,5 +1,11 @@
 import { processRichText } from "@/lib/utils";
+import type { Metadata } from "next";
+import { getMetadata } from "@/lib/services/Seo.services";
 
+export async function generateMetadata(): Promise<Metadata> {
+  const metadata: Metadata = await getMetadata("/terms-of-use");
+  return metadata;
+}
 export default async function TermsOfUse() {
   const url = `${process.env.AIRTABLE_API_URL}/${process.env.BASE_ID}/Legal?filterByFormula=LOWER('terms-of-use')%3DLOWER(name)`;
 

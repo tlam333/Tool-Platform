@@ -1,4 +1,12 @@
+import { getMetadata } from "@/lib/services/Seo.services";
 import { processRichText } from "@/lib/utils";
+import type { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const metadata: Metadata = await getMetadata("/privacy");
+  return metadata;
+}
+
 export default async function Privacy() {
   const url = `${process.env.AIRTABLE_API_URL}/${process.env.BASE_ID}/Legal?filterByFormula=LOWER('privacy')%3DLOWER(name)`;
 
