@@ -9,6 +9,7 @@ interface InputProps {
   required?: boolean;
   error?: FieldError | undefined;
   divClassName?: string;
+  readonly?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -20,6 +21,7 @@ const Input: React.FC<InputProps> = ({
   required = false,
   error,
   divClassName = "flex flex-col gap-1",
+  readonly = false,
 }) => {
   return (
     <div className={divClassName}>
@@ -35,6 +37,7 @@ const Input: React.FC<InputProps> = ({
           id={name}
           placeholder={placeholder}
           {...register(name, { required })}
+          readOnly={readonly}
         />
       )}
       {type == "textarea" && (
@@ -44,6 +47,7 @@ const Input: React.FC<InputProps> = ({
           style={{ whiteSpace: "pre-wrap" }}
           placeholder={placeholder}
           {...register(name, { required })}
+          readOnly={readonly}
         ></textarea>
       )}
       {error && <p>{error.message}</p>}

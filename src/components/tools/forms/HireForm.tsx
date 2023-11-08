@@ -12,8 +12,11 @@ import Balancer from "react-wrap-balancer";
 import { CheckCircle, Frown } from "lucide-react";
 import Link from "next/link";
 import { calculateStripeFee } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import SignInComponent from "./SignIn";
 
 interface Props {
+  //@ts-ignore
   tool: Tool;
 }
 const today = new Date();
@@ -37,9 +40,10 @@ const bookSchema = Yup.object().shape({
 });
 
 export default function HireForm({ tool }: Props) {
-  const [user, setUser] = useState<string>("");
+  const [user, setUser] = useState<any>();
   const router = useSearchParams();
   // const checkoutSessionId = router.get("session_id");
+  const { data: session } = useSession();
 
   const [errors, setErrors] = useState<any>();
   const [bookingCreated, setBookingCreated] = useState(false);
@@ -61,10 +65,12 @@ export default function HireForm({ tool }: Props) {
     },
   });
   const { isSubmitting, isSubmitSuccessful } = formState;
-
   useEffect(() => {
-    setValue("hirerId", user);
-  }, [user]);
+    if (session?.user) {
+      setUser(session.user);
+      setValue("hirerId", session.user.id);
+    }
+  }, [session]);
 
   const onSubmit = async (data: any) => {
     sessionStorage.setItem("bookingData", JSON.stringify(data));
@@ -74,7 +80,7 @@ export default function HireForm({ tool }: Props) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ hirerId: data.hirerId }),
+      body: JSON.stringify({ hirerId: session?.user.id }),
     })
       .then((res) => res.json())
       .catch((err) => console.log(err));
@@ -119,14 +125,24 @@ export default function HireForm({ tool }: Props) {
 
   return (
     <>
-      {!user && !checkoutSessionId && (
+      {!user && (
+        <>
+          <h2 className="pt-5 text-center">
+            Sign in to continue with the booking!
+          </h2>
+          <div className="mx-auto pb-5">
+            <SignInComponent />
+          </div>
+        </>
+      )}
+      {user && !user.complete && !checkoutSessionId && (
         <>
           <h2 className="py-2">Please confirm contact details.</h2>
           <hr className="my-2" />
-          <UserForm buttonText={"Next-Select Dates"} setUser={setUser} />
+          <UserForm buttonText={"Next-Select Dates"} />
         </>
       )}
-      {user && !checkoutSessionId && (
+      {user && user.complete && !checkoutSessionId && (
         <>
           <h2 className="py-2">
             Select date & duration for the hire and proceed to payment.

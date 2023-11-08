@@ -1,5 +1,5 @@
 "use client";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Loading from "@/components/shared/Loading";
@@ -9,10 +9,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getUser } from "@/lib/services/User.services";
 import Balancer from "react-wrap-balancer";
+import { useSession } from "next-auth/react";
 
 interface Props {
   buttonText: string;
-  setUser?: (user: string) => void;
   redirect?: string;
   interest?: string;
 }
@@ -34,12 +34,14 @@ const userSchema = Yup.object().shape({
 });
 export default function UserForm({
   buttonText,
-  setUser,
   redirect,
   interest = "List tools",
 }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { data: session, update } = useSession();
+
+  const sessionUserId = session?.user?.id;
 
   const {
     register,
@@ -57,12 +59,11 @@ export default function UserForm({
     },
   });
   useEffect(() => {
-    const userIdString = window.localStorage.getItem("userId");
-    if (redirect && userIdString) {
+    if (redirect && sessionUserId) {
       router.push(redirect);
-    } else if (userIdString) {
+    } else if (sessionUserId) {
       setLoading(true);
-      const userId = JSON.parse(userIdString);
+      const userId = sessionUserId;
       getUser(userId).then((res) => {
         if (res?.error) {
           console.log(res.error);
@@ -88,8 +89,8 @@ export default function UserForm({
   async function onSubmit(data: any) {
     const res = await createUser(data).then((res) => {
       if (res.id) {
-        window.localStorage.setItem("userId", JSON.stringify(res.id));
-        if (setUser) setUser(res.id);
+        //update session with user complete
+        update();
         if (redirect) {
           router.push(redirect);
         }
@@ -133,6 +134,7 @@ export default function UserForm({
               divClassName="flex flex-col gap-1 col-span-2"
               register={register}
               required
+              readonly
             />
             <Input
               name="phone"
