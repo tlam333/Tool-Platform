@@ -34,7 +34,7 @@ export default function SignInComponent({ redirect }: Props) {
           <p className="text-sm text-gray-500">Please sign in to continue.</p>
         </div>
 
-        <div className="flex flex-col space-y-4 bg-gray-50 px-4 pt-8 md:px-16">
+        <div className="flex flex-col space-y-4 bg-gray-50 px-4 p-8 md:px-16">
           <button
             disabled={signInClickedGm}
             className={`${
@@ -60,7 +60,7 @@ export default function SignInComponent({ redirect }: Props) {
             )}
           </button>
         </div>
-        <div className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 md:px-16">
+        {/* <div className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 md:px-16">
           <button
             disabled={signInClickedFb}
             className={`${
@@ -85,7 +85,7 @@ export default function SignInComponent({ redirect }: Props) {
               </>
             )}
           </button>
-        </div>
+        </div> */}
       </div>
     </>
   );
