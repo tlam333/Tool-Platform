@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { getUsers } from "../../users/route";
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const authOptions: NextAuthOptions = {
@@ -63,8 +64,8 @@ export const authOptions: NextAuthOptions = {
     async signIn({ profile, user }) {
       try {
         //find or create the user in the database
-        const response = await fetch(`${apiURL}/users?email=${user.email}`);
-        const { users } = await response.json();
+        const response = await getUsers(undefined, user.email as string);
+        const { users } = response;
 
         if (users.length === 0) {
           const firstName = user.name?.split(" ")[0];
@@ -84,7 +85,7 @@ export const authOptions: NextAuthOptions = {
               image: user.image,
             }),
           });
-          const { userId, message } = await response.json();
+          const { id: userId, message } = await response.json();
           user.id = userId;
         } else {
           user.id = users[0].id;

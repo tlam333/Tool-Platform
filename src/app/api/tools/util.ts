@@ -2,7 +2,7 @@ import { urlEncodePath } from "@/lib/utils";
 var airtableApiUrl = `${process.env.AIRTABLE_API_URL}/${process.env.BASE_ID}/Tools`;
 
 export async function getAllProductPaths(offset?: string) {
-  var apiUrl = `${airtableApiUrl}?fields%5B%5D=Product%20Name`;
+  var apiUrl = `${airtableApiUrl}?fields%5B%5D=Product%20Name&fields%5B%5D=UpdatedAt`;
   if (offset) {
     apiUrl = `${apiUrl}&offset=${offset}`;
   }
@@ -21,9 +21,13 @@ export async function getAllProductPaths(offset?: string) {
   }
 
   const records = await res.records;
-  var productPaths = records.map(
-    (record: any) =>
-      record.id + "-" + urlEncodePath(record.fields["Product Name"])
+  var productPaths: { path: string; updatedAt: string }[] = records.map(
+    (record: any) => {
+      return {
+        path: record.id + "-" + urlEncodePath(record.fields["Product Name"]),
+        updatedAt: record.fields.UpdatedAt,
+      };
+    }
   );
   if (await res.offset) {
     const { productPaths: productPaths2 } = await getAllProductPaths(

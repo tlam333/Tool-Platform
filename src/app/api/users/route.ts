@@ -98,9 +98,8 @@ export async function POST(request: NextRequest, response: NextResponse) {
 export async function GET(request: NextRequest, response: NextResponse) {
   const { searchParams } = new URL(request.url);
   const userIds = searchParams.get("userIds") || undefined;
-  const email = searchParams.get("email") || undefined;
 
-  const res = await getUsers(userIds, email);
+  const res = await getUsers(userIds);
 
   const { error } = await res;
   if (error) {
@@ -113,7 +112,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
   return NextResponse.json({ users: users });
 }
 
-async function getUsers(userIds?: string, email?: string) {
+export async function getUsers(userIds?: string, email?: string) {
   if (!userIds && !email) {
     return { error: "No user ids or emails provided." };
   }

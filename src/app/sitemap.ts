@@ -19,16 +19,16 @@ type pageEntry = {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   //get all the product ids and names from the database
   const { productPaths } = await getAllProductPaths();
-  const productPages: pageEntry[] = await productPaths.map(
-    (productPath: string) => {
-      return {
-        url: `${siteUrl}/for-hire/${productPath}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.9,
-      };
-    }
-  );
+  const productPages: pageEntry[] = await productPaths.map((productPath) => {
+    return {
+      url: `${siteUrl}/for-hire/${productPath.path}`,
+      lastModified: productPath.updatedAt
+        ? new Date(productPath.updatedAt)
+        : new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    };
+  });
 
   return [
     {
