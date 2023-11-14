@@ -6,9 +6,6 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import { Google, Facebook, LoadingDots } from "@/components/shared/icons";
-
-import Image from "next/image";
 import SignInComponent from "../user/forms/SignIn";
 
 const SignInModal = ({
@@ -18,9 +15,6 @@ const SignInModal = ({
   showSignInModal: boolean;
   setShowSignInModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [signInClickedGm, setSignInClickedGm] = useState(false);
-  const [signInClickedFb, setSignInClickedFb] = useState(false);
-
   return (
     <Modal showModal={showSignInModal} setShowModal={setShowSignInModal}>
       <SignInComponent />
