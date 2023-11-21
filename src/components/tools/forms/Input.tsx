@@ -50,7 +50,11 @@ const Input: React.FC<InputProps> = ({
           readOnly={readonly}
         ></textarea>
       )}
-      {error && <p>{error.message}</p>}
+      {error && (
+        <p className="text-sm text-red-500">
+          {error.message?.replace(/^"(.*)"$/, "$1")}
+        </p>
+      )}
     </div>
   );
 };
