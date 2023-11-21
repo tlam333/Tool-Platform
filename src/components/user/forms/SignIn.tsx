@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Input from "@/components/tools/forms/Input";
 import EmailSignin from "./EmailSignin";
 import Balancer from "react-wrap-balancer";
 interface Props {
