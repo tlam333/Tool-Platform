@@ -115,19 +115,23 @@ export async function deleteOtp(id: string) {
 }
 
 export async function createUser(user: Partial<User>) {
-  const response = await fetch(`${airtableApiUrl}/users`, {
+  const response = await fetch(`${airtableApiUrl}/Users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
     },
-
     body: JSON.stringify({
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      image: user.image,
+      fields: {
+        Email: user.email,
+        "First Name": user.firstName,
+        "Last Name": user.lastName,
+        Interest: user.interest,
+        image: user.image,
+      },
     }),
   });
+
   const { id, message } = await response.json();
 
   return { userId: id };

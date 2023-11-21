@@ -53,10 +53,12 @@ export default function EmailSignin({
         `/api/auth/callback/otp-generation?email=${data.email}`,
         { method: "POST" }
       );
+      const { newUser: isNewUser } = await res.json();
       setVerifyOtp(true);
-      //@ts-ignore
-      setNewUser(res.newUser);
-      if (newUser) {
+      console.log("otp resp-", isNewUser);
+
+      setNewUser(isNewUser);
+      if (isNewUser) {
         setButtontxt("Signup");
       } else {
         setButtontxt("Signin");
@@ -70,24 +72,21 @@ export default function EmailSignin({
         setFormError("Please complete all the required fields!");
         return;
       }
-      try {
-        signIn("otp-verification", {
-          email: data.email,
-          code: data.otp,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          redirect: false,
-        }).then(({ ok, error }: any) => {
-          if (ok) {
-            //router.push(redirect as string);
-            window.location.replace(redirect as string);
-          } else {
-            setError(error);
-          }
-        });
-      } catch (error) {
-        setError(error as string);
-      }
+      await signIn("otp-verification", {
+        email: data.email,
+        code: data.otp,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        interest: data.interest,
+        redirect: false,
+      }).then(({ ok, error }: any) => {
+        if (ok) {
+          //router.push(redirect as string);
+          window.location.replace(redirect as string);
+        } else {
+          setError(error);
+        }
+      });
     }
   };
 

@@ -42,7 +42,7 @@ export default function SignInComponent({ redirect }: Props) {
           </a>
           <h3 className="font-display text-2xl font-bold">Sign In</h3>
           <p className="text-sm text-gray-500">Please sign in to continue.</p>
-          <p>First time? We'll create the account automatically for you.</p>
+          <p>First time? We will create the account automatically for you.</p>
         </div>
 
         <div className="flex flex-col bg-gray-50 px-4 p-4 md:px-16">
