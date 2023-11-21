@@ -1,9 +1,9 @@
 "use client";
-import UserForm from "../user/forms/UserForm";
+import UserForm from "./forms/UserForm";
 import ToolForm from "./forms/ToolForm";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import SignInComponent from "../user/forms/SignIn";
+import SignInComponent from "./forms/SignIn";
 import Balancer from "react-wrap-balancer";
 
 export default function AddTools() {
