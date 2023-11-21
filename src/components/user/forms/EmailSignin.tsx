@@ -59,9 +59,9 @@ export default function EmailSignin({
 
       setNewUser(isNewUser);
       if (isNewUser) {
-        setButtontxt("Signup");
+        setButtontxt("Sign Up");
       } else {
-        setButtontxt("Signin");
+        setButtontxt("Sign In");
       }
     } else {
       if (data.otp.length !== 6) {
@@ -136,7 +136,7 @@ export default function EmailSignin({
 
         {formError && <p className="text-sm text-red-500">{formError}</p>}
       </div>
-      <div className="flex flex-col bg-gray-50 px-4 p-2 md:px-16">
+      <div className="flex flex-col bg-gray-50">
         <button
           type="submit"
           disabled={isSubmitting}

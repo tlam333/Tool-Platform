@@ -79,7 +79,7 @@ export default function SignInComponent({ redirect }: Props) {
             )}
           </button>
         </div>
-        {/* <div className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 md:px-16">
+        {/* <div className="flex flex-col bg-gray-50 px-4 pb-4 md:px-16">
           <button
             disabled={signInClickedFb}
             className={`${
