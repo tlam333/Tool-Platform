@@ -32,7 +32,6 @@ export async function sendEmail(
     })
     .catch((error) => {
       console.error(error);
-      return { status: false, error: error };
     });
-  return { status: true, error: undefined };
+  return true;
 }
