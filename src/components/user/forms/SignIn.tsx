@@ -5,6 +5,9 @@ import Image from "next/image";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Input from "@/components/tools/forms/Input";
+import EmailSignin from "./EmailSignin";
+import Balancer from "react-wrap-balancer";
 interface Props {
   redirect?: string;
 }
@@ -14,8 +17,15 @@ export default function SignInComponent({ redirect }: Props) {
   const [signInClickedFb, setSignInClickedFb] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
+
   if (session && redirect) {
     router.push(redirect);
+  } else if (session?.user) {
+    return (
+      <div className="w-full overflow-hidden md:max-w-md">
+        <p>You are already signed in!</p>
+      </div>
+    );
   }
   return (
     <>
@@ -32,8 +42,17 @@ export default function SignInComponent({ redirect }: Props) {
           </a>
           <h3 className="font-display text-2xl font-bold">Sign In</h3>
           <p className="text-sm text-gray-500">Please sign in to continue.</p>
+          <p>First time? We'll create the account automatically for you.</p>
         </div>
 
+        <div className="flex flex-col bg-gray-50 px-4 p-4 md:px-16">
+          <EmailSignin
+            buttonText="Sign In with email"
+            redirect={redirect}
+          ></EmailSignin>
+        </div>
+
+        <hr></hr>
         <div className="flex flex-col space-y-4 bg-gray-50 px-4 p-8 md:px-16">
           <button
             disabled={signInClickedGm}
@@ -86,6 +105,21 @@ export default function SignInComponent({ redirect }: Props) {
             )}
           </button>
         </div> */}
+        <div className="flex flex-col pb-6 px-4 md:px-16 bg-gray-50 mx-auto">
+          <p className="text-sm">
+            <Balancer>
+              Creating an account means you agree to our{" "}
+              <a href="/terms-of-use" target="_blank" className="link">
+                Terms of Use
+              </a>{" "}
+              and{" "}
+              <a href="/privacy" target="_blank" className="link">
+                Privacy Policy
+              </a>
+              .
+            </Balancer>
+          </p>
+        </div>
       </div>
     </>
   );

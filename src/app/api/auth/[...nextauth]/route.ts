@@ -3,7 +3,18 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getUsers } from "../../users/route";
+import { NextRequest, NextResponse } from "next/server";
+import { createUser, deleteOtp, getOtp, saveOtp } from "../../users/util";
+import { sendEmail } from "../../notifications/email/route";
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
+const tokenExpiry = 10 * 60; // 10 minutes
+const pages = {
+  //signIn: "/auth/signin",
+  //   signOut: "/auth/signout",
+  //   error: "/auth/error", // Error code passed in query string as ?error=
+  //   verifyRequest: "/auth/verify-request", // (used for check email message)
+  //   newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -15,28 +26,21 @@ export const authOptions: NextAuthOptions = {
     //   clientId: process.env.FACEBOOK_CLIENT_ID as string,
     //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
     // }),
-    // CredentialsProvider({
-    //   name: "Credentials",
-    //   credentials: {
-    //     email: { label: "Email", type: "text" },
-    //     password: { label: "Password", type: "password" },
-    //   },
-    //   async authorize(credentials, req) {
-    //     if (typeof credentials !== "undefined") {
-    //       const res = await authenticate(
-    //         credentials.email,
-    //         credentials.password
-    //       );
-    //       if (typeof res !== "undefined") {
-    //         return { ...res.user, apiToken: res.token };
-    //       } else {
-    //         return null;
-    //       }
-    //     } else {
-    //       return null;
-    //     }
-    //   },
-    // }),
+    CredentialsProvider({
+      id: "otp-generation",
+      type: "credentials",
+      name: "Magic Code",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "Your email address",
+        },
+      },
+      async authorize() {
+        return null;
+      },
+    }),
   ],
   callbacks: {
     async session({ session, token }) {
@@ -72,20 +76,26 @@ export const authOptions: NextAuthOptions = {
 
           const lastName = user.name?.split(" ").slice(1).join(" ");
           //create the user
-          const response = await fetch(`${apiURL}/users`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+          // const response = await fetch(`${apiURL}/users`, {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
 
-            body: JSON.stringify({
-              email: user.email,
-              firstName: firstName,
-              lastName: lastName,
-              image: user.image,
-            }),
+          //   body: JSON.stringify({
+          //     email: user.email,
+          //     firstName: firstName,
+          //     lastName: lastName,
+          //     image: user.image,
+          //   }),
+          // });
+          // const { id: userId, message } = await response.json();
+          const { userId } = await createUser({
+            email: user.email || "",
+            firstName: firstName,
+            lastName: lastName,
+            image: user.image || "",
           });
-          const { id: userId, message } = await response.json();
           user.id = userId;
         } else {
           user.id = users[0].id;
@@ -99,16 +109,194 @@ export const authOptions: NextAuthOptions = {
     },
   },
   session: { strategy: "jwt" },
-
-  // pages: {
-  //   signIn: "/auth/signin",
-  //   signOut: "/auth/signout",
-  //   error: "/auth/error", // Error code passed in query string as ?error=
-  //   verifyRequest: "/auth/verify-request", // (used for check email message)
-  //   newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
-  // },
+  pages: pages,
 };
 
-const handler = NextAuth(authOptions);
+const handler = async (req: NextRequest, res: NextResponse) => {
+  const nextauth = req.nextUrl.pathname.replace("/api/auth/", "").split("/");
+  if (
+    nextauth !== undefined &&
+    nextauth.length > 1 &&
+    nextauth[0] === "callback" &&
+    nextauth[1] === "otp-generation" &&
+    req.method === "POST"
+  ) {
+    const email = req.nextUrl.searchParams.get("email")?.trim() || "";
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: "Provide valid email." },
+        { status: 500 }
+      );
+    }
+    const { newUser } = await sendOtp(email);
+
+    res = NextResponse.json({ newUser: newUser }, { status: 201 });
+    res.cookies.set("otp-flow.user-email", email, {
+      httpOnly: true,
+      maxAge: tokenExpiry,
+      path: "/",
+    });
+
+    res.cookies.set("otp-flow.new-user", newUser ? "yes" : "no", {
+      httpOnly: true,
+      maxAge: tokenExpiry,
+      path: "/",
+    });
+
+    return res;
+  }
+
+  const isOtpFlowInProgress =
+    req.cookies.get("otp-flow.user-email") &&
+    req.cookies.get("otp-flow.user-email")?.value !== "";
+
+  if (isOtpFlowInProgress) {
+    const newUser =
+      req.cookies.get("otp-flow.new-user")?.value == "yes" ? true : false;
+    var cred: any = {};
+    if (newUser) {
+      cred = {
+        code: {
+          label: "Code",
+          type: "text",
+          placeholder: "Enter the code you received via email",
+        },
+        firstName: { label: "First name", type: "text" },
+        lastName: { label: "Last name", type: "text" },
+      };
+    } else {
+      cred = {
+        code: {
+          label: "Code",
+          type: "text",
+          placeholder: "Enter the code you received via email",
+        },
+      };
+    }
+    return NextAuth({
+      providers: [
+        CredentialsProvider({
+          id: "otp-verification",
+          type: "credentials",
+          name: "Magic Code",
+          credentials: cred,
+          async authorize(credentials, _req) {
+            const email = credentials?.email.trim();
+            const code = credentials?.code.trim();
+
+            if (email === undefined || code === undefined) {
+              return null;
+            }
+            const { status, error } = await validateOtp(email, code);
+
+            if (!status) {
+              throw new Error(JSON.stringify(error));
+            }
+
+            res = NextResponse.json({ message: "success" }, { status: 201 });
+            res.cookies.set("otp-flow.user-email", "", {
+              maxAge: -1,
+              path: "/",
+            });
+            res.cookies.set("otp-flow.new-user", "", {
+              maxAge: -1,
+              path: "/",
+            });
+
+            if (newUser) {
+              //create new user in db
+              const { userId } = await createUser({
+                email: email || "",
+                firstName: credentials?.firstName,
+                lastName: credentials?.lastName,
+              });
+
+              return {
+                id: userId,
+                name: credentials?.firstName + " " + credentials?.lastName,
+                email: email,
+              };
+            } else {
+              //get user from db
+              const response = await getUsers(undefined, email as string);
+              const { users } = response;
+              const user = {
+                id: users[0].id,
+                email: users[0].email,
+                name: users[0].firstName + " " + users[0].lastName,
+                image: users[0].image,
+              };
+              if (users.length > 0) {
+                return user;
+              } else {
+                return null; //or error
+              }
+            }
+          },
+        }),
+      ],
+      session: { strategy: "jwt" },
+      pages: pages,
+    })(req, res);
+  }
+  return NextAuth(authOptions)(req, res);
+};
 
 export { handler as GET, handler as POST };
+
+async function findOrCreateUser(email: string) {
+  const user = { id: "yewiuyg", name: "Nagendra", email: email };
+  return user;
+}
+
+async function isValidEmail(email: string) {
+  return true;
+}
+
+async function sendOtp(email: string) {
+  //generate OTP
+  const random = crypto.getRandomValues(new Uint8Array(8));
+  const token = Buffer.from(random).toString("hex").slice(0, 6).toUpperCase();
+  //send OTP uncomment below lines
+  // const templateId = "d-e25d37d411ab432ea392200bb2880027";
+  // const response = await sendEmail(email, "", { otp: token }, templateId);
+  // const { error } = response;
+  // if (error) {
+  //   throw new Error(JSON.stringify(error));
+  // }
+  //save OTP
+  var expiryTime = new Date();
+  expiryTime.setSeconds(expiryTime.getSeconds() + tokenExpiry);
+  const newUser = await saveOtp(email, token, expiryTime);
+  return newUser;
+}
+
+async function validateOtp(email: string, token: string) {
+  const { error, otpRow } = await getOtp(email, token);
+  var currentTime = new Date();
+  currentTime.setSeconds(currentTime.getSeconds() + 1);
+  var otpStatus = false;
+  var errorMessage = undefined;
+  if (error) {
+    errorMessage = error;
+  } else {
+    if (otpRow?.email == email && otpRow?.otp == token) {
+      if (new Date(otpRow.expiryTime) >= currentTime) {
+        otpStatus = true;
+      } else {
+        //otp expired - delete otp
+        deleteOtp(otpRow.id);
+        errorMessage = "OTP expired!";
+      }
+    } else errorMessage = "Invalid OTP!";
+  }
+
+  if (errorMessage) return { status: false, error: errorMessage };
+  else {
+    // OTP validated, delete the record from otp table
+    deleteOtp(otpRow?.id);
+  }
+
+  return { status: true, error: errorMessage };
+}
