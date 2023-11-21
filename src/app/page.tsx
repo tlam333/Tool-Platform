@@ -8,7 +8,7 @@ import OpendDialog from "@/components/shared/OpendDialog";
 import Script from "next/script";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
-import SignInComponent from "@/components/tools/forms/SignIn";
+import SignInComponent from "@/components/user/forms/SignIn";
 
 export default async function Home({
   searchParams,

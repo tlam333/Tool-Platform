@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, use } from "react";
-import UserForm from "./UserForm";
+import UserForm from "../../user/forms/UserForm";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,7 +13,7 @@ import { CheckCircle, Frown } from "lucide-react";
 import Link from "next/link";
 import { calculateStripeFee } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import SignInComponent from "./SignIn";
+import SignInComponent from "../../user/forms/SignIn";
 
 interface Props {
   //@ts-ignore
