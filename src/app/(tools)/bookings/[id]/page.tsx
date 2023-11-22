@@ -13,7 +13,7 @@ export default async function BookingPage({
   const bookingResp = getBookingById(params.id);
 
   const { error, bookingData } = await bookingResp;
-  if (error == "NOT_FOUND") {
+  if (error) {
     return notFound();
   }
 

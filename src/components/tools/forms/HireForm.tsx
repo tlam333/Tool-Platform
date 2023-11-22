@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import UserForm from "../../user/forms/UserForm";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
@@ -14,6 +14,7 @@ import Link from "next/link";
 import { calculateStripeFee } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import SignInComponent from "../../user/forms/SignIn";
+import { useRouter } from "next/navigation";
 
 interface Props {
   //@ts-ignore
@@ -41,14 +42,14 @@ const bookSchema = Yup.object().shape({
 
 export default function HireForm({ tool }: Props) {
   const [user, setUser] = useState<any>();
-  const router = useSearchParams();
-  // const checkoutSessionId = router.get("session_id");
+  const params = useSearchParams();
+  const router = useRouter();
   const { data: session } = useSession();
 
   const [errors, setErrors] = useState<any>();
   const [bookingCreated, setBookingCreated] = useState(false);
   const [checkoutSessionId, setCheckoutSessionId] = useState<string>(
-    router.get("session_id") || ""
+    params.get("session_id") || ""
   );
 
   const { register, handleSubmit, formState, setValue, watch } = useForm({
@@ -75,13 +76,7 @@ export default function HireForm({ tool }: Props) {
   const onSubmit = async (data: any) => {
     sessionStorage.setItem("bookingData", JSON.stringify(data));
 
-    const res = await fetch("/api/payments/checkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ hirerId: session?.user.id }),
-    })
+    const res = await fetch("/api/payments/checkout")
       .then((res) => res.json())
       .catch((err) => console.log(err));
 
@@ -101,6 +96,7 @@ export default function HireForm({ tool }: Props) {
     } else {
       setErrors(null);
       setBookingCreated(true);
+      router.push("/for-hire/hire-success");
     }
   };
 
@@ -254,7 +250,7 @@ export default function HireForm({ tool }: Props) {
           <p>Hire request is cancelled.</p>
           <br />
           <Link
-            href={"?hirenow=true"}
+            href={""}
             onClick={() => setCheckoutSessionId("")}
             className="btn btn-secondary"
           >
