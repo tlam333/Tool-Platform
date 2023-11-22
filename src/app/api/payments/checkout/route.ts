@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { findOrCreateStripeCustomer } from "../stripeUser/route";
+import { findOrCreateStripeCustomer } from "../stripeUser/util";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 /**

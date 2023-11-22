@@ -7,7 +7,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2023-08-16",
 });
 
-export async function findOrCreateStripeCustomer(customerId: string) {
+export async function findOrCreateStripeCustomer(
+  customerId: string
+): Promise<string> {
   const { user } = await getUserDetails(customerId);
 
   if (user?.stripeId) return user.stripeId;
