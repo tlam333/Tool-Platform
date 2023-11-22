@@ -1,10 +1,9 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FieldError, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Loading from "@/components/shared/Loading";
 import Input from "@/components/tools/forms/Input";
 import { useRouter } from "next/navigation";
 import { LoadingDots } from "@/components/shared/icons";
@@ -15,11 +14,7 @@ interface Props {
   interest?: string;
 }
 
-export default function EmailSignin({
-  buttonText,
-  redirect = process.env.NEXT_PUBLIC_URL,
-  interest,
-}: Props) {
+export default function EmailSignin({ buttonText, redirect, interest }: Props) {
   const router = useRouter();
   const [verifyOtp, setVerifyOtp] = useState(false);
   const [newUser, setNewUser] = useState(false);
@@ -81,8 +76,7 @@ export default function EmailSignin({
         redirect: false,
       }).then(({ ok, error }: any) => {
         if (ok) {
-          //router.push(redirect as string);
-          window.location.replace(redirect as string);
+          router.push(redirect || "");
         } else {
           setError(error);
         }
