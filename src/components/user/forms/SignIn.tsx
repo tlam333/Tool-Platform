@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import EmailSignin from "./EmailSignin";
 import Balancer from "react-wrap-balancer";
+import { Link } from "lucide-react";
 interface Props {
   redirect?: string;
 }
@@ -21,8 +22,12 @@ export default function SignInComponent({ redirect }: Props) {
     router.push(redirect);
   } else if (session?.user) {
     return (
-      <div className="w-full overflow-hidden md:max-w-md">
+      <div className="w-full  md:max-w-md">
         <p>You are already signed in!</p>
+        <br />
+        <a href="/" className="btn btn-secondary btn-wide">
+          Home
+        </a>
       </div>
     );
   }
