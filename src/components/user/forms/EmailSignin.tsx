@@ -50,7 +50,6 @@ export default function EmailSignin({ buttonText, redirect, interest }: Props) {
       );
       const { newUser: isNewUser } = await res.json();
       setVerifyOtp(true);
-      console.log("otp resp-", isNewUser);
 
       setNewUser(isNewUser);
       if (isNewUser) {

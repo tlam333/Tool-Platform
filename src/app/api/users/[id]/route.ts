@@ -111,7 +111,7 @@ export async function updateUser(
     message = error;
     console.log("update user error-", error);
   } else {
-    updatedId = await res.records[0].id;
+    updatedId = await res.id;
   }
 
   return { message, updatedId };

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { findOrCreateStripeCustomer } from "../stripeUser/route";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/route";
 /**
  * stripe checkout api integration server side
  */
@@ -10,8 +12,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
   apiVersion: "2023-08-16",
 });
 
-export async function POST(req: NextRequest) {
-  const { hirerId } = await req.json();
+export async function GET(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user.id) {
+    return NextResponse.json(
+      { error: "Unauthenticated user!" },
+      { status: 401 }
+    );
+  }
+  const hirerId = session.user.id;
 
   const referer = req.headers.get("referer") || `${domainUrl}/success?`;
 
@@ -27,8 +36,8 @@ export async function getCheckoutSessionUrl(hirerId: string, baseUrl: string) {
     mode: "setup",
     payment_method_types: ["card"],
     customer: stripeCustomer,
-    success_url: `${baseUrl}&session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${baseUrl}&session_id=failed`,
+    success_url: `${baseUrl}?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}?session_id=failed`,
   });
   return session.url;
 }

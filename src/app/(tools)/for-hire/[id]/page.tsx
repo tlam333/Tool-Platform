@@ -62,8 +62,6 @@ export default async function ToolDetailsPage({
     return notFound();
   }
 
-  const hireNow = searchParams["hirenow"] ? true : false;
-
   const productJsonLd = {
     __html: `{
       "@context": "https://schema.org/",
@@ -109,72 +107,53 @@ export default async function ToolDetailsPage({
           </ul>
         </div>
         <div className="flex flex-col lg:flex-row items-start justify-evenly">
-          {!hireNow && (
-            <div className="mx-auto lg:w-1/2">
-              <div className="carousel rounded-box">
-                <div className="carousel-item" key={tool.images[0]}>
-                  <Image
-                    width={375}
-                    height={256}
-                    src={tool.images[0]}
-                    style={{
-                      width: "auto",
-                      border: "1px solid #ffffff",
-                    }}
-                    alt={`tool image-0`}
-                    placeholder="blur"
-                    blurDataURL={
-                      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P/+EQAFxwLSC8o+/gAAAABJRU5ErkJggg=="
-                    }
-                  ></Image>
-                </div>
-                {tool.images.length > 1 &&
-                  tool.images?.map((image: string, index: number) => (
-                    <div className="carousel-item" key={image}>
-                      <Image
-                        width={375}
-                        height={256}
-                        src={image}
-                        style={{
-                          width: "auto",
-                          border: "1px solid #ffffff",
-                        }}
-                        alt={`tool image-${index}`}
-                        placeholder="blur"
-                        blurDataURL={
-                          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P/+EQAFxwLSC8o+/gAAAABJRU5ErkJggg=="
-                        }
-                      />
-                    </div>
-                  ))}
+          <div className="mx-auto lg:w-1/2">
+            <div className="carousel rounded-box">
+              <div className="carousel-item" key={tool.images[0]}>
+                <Image
+                  width={375}
+                  height={256}
+                  src={tool.images[0]}
+                  style={{
+                    width: "auto",
+                    border: "1px solid #ffffff",
+                  }}
+                  alt={`tool image-0`}
+                  placeholder="blur"
+                  blurDataURL={
+                    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P/+EQAFxwLSC8o+/gAAAABJRU5ErkJggg=="
+                  }
+                ></Image>
               </div>
-              <div className="my-5 text-center">
-                <Link
-                  className="btn btn-secondary btn-wide"
-                  href={"?hirenow=true"}
-                >
-                  Hire Now
-                </Link>
-              </div>
+              {tool.images.length > 1 &&
+                tool.images?.map((image: string, index: number) => (
+                  <div className="carousel-item" key={image}>
+                    <Image
+                      width={375}
+                      height={256}
+                      src={image}
+                      style={{
+                        width: "auto",
+                        border: "1px solid #ffffff",
+                      }}
+                      alt={`tool image-${index}`}
+                      placeholder="blur"
+                      blurDataURL={
+                        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P/+EQAFxwLSC8o+/gAAAABJRU5ErkJggg=="
+                      }
+                    />
+                  </div>
+                ))}
             </div>
-          )}
-          {hireNow && (
-            <div className="my-5 p-5 bg-base-200 w-full lg:w-1/2">
-              <div className="flex flex-row justify-between">
-                <h2 className="font-bold">Hire Now!</h2>
-                <div className="tooltip" data-tip="Close">
-                  <Link
-                    href={"?"}
-                    className="btn btn-sm bg-base-300 btn-circle btn-ghost"
-                  >
-                    ✕
-                  </Link>
-                </div>
-              </div>
-
-              <HireForm tool={tool} />
+            <div className="my-5 text-center">
+              <Link
+                className="btn btn-secondary btn-wide"
+                href={`./${urlPath}/hire-now`}
+              >
+                Hire Now
+              </Link>
             </div>
-          )}
+          </div>
 
           <div className="card-body justify-between w-full lg:w-1/2">
             <h1 className="card-title">{tool.name}</h1>
@@ -209,11 +188,11 @@ export default async function ToolDetailsPage({
 }
 
 //this portion forces startic generation of all tools pages
-// export async function generateStaticParams() {
-//   const toolsPage: Promise<ToolsPage> = getAllTools({ limit: "100" });
-//   const { tools } = await toolsPage;
+export async function generateStaticParams() {
+  const toolsPage: Promise<ToolsPage> = getAllTools({ limit: "100" });
+  const { tools } = await toolsPage;
 
-//   return tools.map((tool) => {
-//     id: tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-").toLowerCase());
-//   });
-// }
+  return tools.map((tool) => {
+    id: tool.id + "-" + encodeURI(tool.name.replace(/ /g, "-").toLowerCase());
+  });
+}
