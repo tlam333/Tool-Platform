@@ -5,9 +5,9 @@ import { getToolById, getAllTools } from "@/lib/services/Tools.services";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 import Balancer from "react-wrap-balancer";
-import HireForm from "@/components/tools/forms/HireForm";
 import { getMetadata } from "@/lib/services/Seo.services";
 import Script from "next/script";
+export const dynamic = "force-static";
 
 export async function generateMetadata({
   params,
