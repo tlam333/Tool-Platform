@@ -17,10 +17,12 @@ function SearchForm() {
   const offset = searchParams.get("offset");
   const keyword = searchParams.get("keyword") ?? undefined;
   const location = searchParams.get("location") ?? undefined;
+  const categories = searchParams.get("categories") ?? undefined;
 
   const searchFormSchema = Yup.object().shape({
     keyword: Yup.string(),
     suburb: Yup.string(),
+    categories: Yup.string(),
   });
 
   const { register, handleSubmit, reset, formState } = useForm({
@@ -34,6 +36,7 @@ function SearchForm() {
     reset({
       keyword: keyword,
       suburb: location,
+      categories: categories,
     });
   }, [keyword, location]);
 
@@ -41,6 +44,7 @@ function SearchForm() {
     data: {
       keyword?: string | undefined;
       suburb?: string | undefined;
+      categories?: string | undefined;
     },
     event?: BaseSyntheticEvent
   ) => {
@@ -48,12 +52,15 @@ function SearchForm() {
 
     let pushUrl = ``;
     if (data.keyword) {
-      pushUrl = `&keyword=${data.keyword}`;
+      pushUrl = `keyword=${data.keyword}&`;
     }
     if (data.suburb) {
-      pushUrl = pushUrl + `&location=${data.suburb}`;
+      pushUrl = pushUrl + `location=${data.suburb}&`;
       //remove spaces from suburb and implement in backend as well
       //pushUrl = pushUrl + `&location=${(data.suburb).replace(/\s/g, '')}`;
+    }
+    if (data.categories) {
+      pushUrl = pushUrl + `categories=${data.categories}`;
     }
     router.push(`?${pushUrl}`);
   };
@@ -61,7 +68,7 @@ function SearchForm() {
     <>
       <div className="mx-auto mb-10 mt-10 gap-3 text-center max-w-5xl">
         <form onSubmit={handleSubmit(onApplyFilter)}>
-          <div className="grid grid-cols-1 gap-2 md:grid-cols-3 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-4 lg:grid-cols-4">
             <Input
               name="keyword"
               placeholder="Tool or equipment name"
@@ -71,6 +78,12 @@ function SearchForm() {
             <Input
               name="suburb"
               placeholder="Suburb name"
+              register={register}
+              divClassName="col-span-1"
+            />
+            <Input
+              name="categories"
+              placeholder="Categories"
               register={register}
               divClassName="col-span-1"
             />

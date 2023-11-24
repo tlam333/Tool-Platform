@@ -29,12 +29,14 @@ export default async function FindTools({
   const location = searchParams["location"] ?? "";
   const offset = searchParams["offset"] ?? "";
   const sortby = searchParams["sortby"] ?? "createdDate";
+  const categories = searchParams["categories"];
   searchParams["page"] = page;
   searchParams["limit"] = limit;
   searchParams["keyword"] = keyword;
   searchParams["location"] = location;
   searchParams["offset"] = offset;
   searchParams["sortby"] = sortby;
+  searchParams["categories"] = categories;
 
   const ToolsData: Promise<ToolsPage> = getAllTools(searchParams);
   const toolsPage = await ToolsData;
