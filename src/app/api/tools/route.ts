@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 
 export async function GET(request: NextRequest, response: NextResponse) {
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit") || 5;
+  const limit = searchParams.get("limit") || 20;
   const page = searchParams.get("page") || 1;
   var offset = searchParams.get("offset") || undefined; //this is the offset for the next page
   const sortby = searchParams.get("sort") || "UpdatedAt";

@@ -24,7 +24,7 @@ export default async function FindTools({
   //const router = useRouter();
   // const searchParams = useSearchParams();
   const page = searchParams["page"] ?? "1";
-  const limit = searchParams["limit"] ?? "5";
+  const limit = searchParams["limit"] ?? "20";
   const keyword = searchParams["keyword"] ?? "";
   const location = searchParams["location"] ?? "";
   const offset = searchParams["offset"] ?? "";
