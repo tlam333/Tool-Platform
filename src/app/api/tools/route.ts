@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
   const page = searchParams.get("page") || 1;
   var offset = searchParams.get("offset") || undefined; //this is the offset for the next page
   const sortby = searchParams.get("sort") || "UpdatedAt";
-  const categories = searchParams.get("categories") || undefined;
+  const categories = searchParams.get("categories")?.toLowerCase() || undefined;
   const keyword = encodeURI((searchParams.get("keyword") || "").toLowerCase());
   var message = searchParams.get("message") || "";
   const location = encodeURI(

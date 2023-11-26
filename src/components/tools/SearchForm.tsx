@@ -7,6 +7,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { BaseSyntheticEvent } from "react";
 import { useEffect } from "react";
 import Input from "@/components/tools/forms/Input";
+import { ToolCategories } from "@/lib/constants";
+import DropDown from "./forms/DropDown";
 
 function SearchForm() {
   const router = useRouter();
@@ -59,7 +61,7 @@ function SearchForm() {
       //remove spaces from suburb and implement in backend as well
       //pushUrl = pushUrl + `&location=${(data.suburb).replace(/\s/g, '')}`;
     }
-    if (data.categories) {
+    if (data.categories && data.categories?.length > 0) {
       pushUrl = pushUrl + `categories=${data.categories}`;
     }
     router.push(`?${pushUrl}`);
@@ -81,11 +83,12 @@ function SearchForm() {
               register={register}
               divClassName="col-span-1"
             />
-            <Input
+            <DropDown
               name="categories"
-              placeholder="Categories"
+              placeholder="Select categories"
               register={register}
               divClassName="col-span-1"
+              list={ToolCategories}
             />
 
             <div className="col-span-1">
