@@ -24,17 +24,19 @@ export default async function FindTools({
   //const router = useRouter();
   // const searchParams = useSearchParams();
   const page = searchParams["page"] ?? "1";
-  const limit = searchParams["limit"] ?? "5";
+  const limit = searchParams["limit"] ?? "20";
   const keyword = searchParams["keyword"] ?? "";
   const location = searchParams["location"] ?? "";
   const offset = searchParams["offset"] ?? "";
   const sortby = searchParams["sortby"] ?? "createdDate";
+  const categories = searchParams["categories"];
   searchParams["page"] = page;
   searchParams["limit"] = limit;
   searchParams["keyword"] = keyword;
   searchParams["location"] = location;
   searchParams["offset"] = offset;
   searchParams["sortby"] = sortby;
+  searchParams["categories"] = categories;
 
   const ToolsData: Promise<ToolsPage> = getAllTools(searchParams);
   const toolsPage = await ToolsData;

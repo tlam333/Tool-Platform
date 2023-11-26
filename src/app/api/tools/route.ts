@@ -7,10 +7,11 @@ import { revalidatePath } from "next/cache";
 
 export async function GET(request: NextRequest, response: NextResponse) {
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit") || 5;
+  const limit = searchParams.get("limit") || 20;
   const page = searchParams.get("page") || 1;
   var offset = searchParams.get("offset") || undefined; //this is the offset for the next page
   const sortby = searchParams.get("sort") || "UpdatedAt";
+  const categories = searchParams.get("categories")?.toLowerCase() || undefined;
   const keyword = encodeURI((searchParams.get("keyword") || "").toLowerCase());
   var message = searchParams.get("message") || "";
   const location = encodeURI(
@@ -34,20 +35,27 @@ export async function GET(request: NextRequest, response: NextResponse) {
     url1 = url1 + `&sort[0][field]=${sortby}&sort[0][direction]=desc`;
   }
 
-  var filterByFormula = ``;
-
-  if (location && keyword) {
-    filterByFormula = `&filterByFormula=AND(FIND('${keyword}'%2C+LOWER(%7BProduct+Name%7D))%2C+FIND('${location}'%2C+LOWER(ARRAYJOIN(Suburb)))%0A)`;
-  } else if (location) {
-    filterByFormula = `&filterByFormula=FIND('${location}'%2C+LOWER(ARRAYJOIN(Suburb)))`;
-  } else if (keyword) {
-    filterByFormula = `&filterByFormula=FIND('${keyword}'%2C+LOWER(%7BProduct+Name%7D))`;
+  var filterByFormula = "";
+  if (location || keyword || categories) {
+    filterByFormula = `&filterByFormula=AND(`;
+    if (location) {
+      filterByFormula = `${filterByFormula}FIND('${location}',LOWER(ARRAYJOIN(Suburb)))`;
+    } else {
+      filterByFormula = `${filterByFormula}1`;
+    }
+    if (keyword) {
+      filterByFormula = `${filterByFormula},FIND('${keyword}',LOWER({Product Name}))`;
+    }
+    if (categories) {
+      filterByFormula = `${filterByFormula},FIND(LOWER({Tool Category}),'${categories}')`;
+    }
+    filterByFormula = `${filterByFormula})`;
   }
 
-  url1 = encodeURI(url1);
   if (filterByFormula) {
     url1 = url1 + `${filterByFormula}`;
   }
+  url1 = encodeURI(url1);
 
   const res = await fetch(url1, {
     headers: {
@@ -74,6 +82,9 @@ export async function GET(request: NextRequest, response: NextResponse) {
     if (location) {
       redirect.searchParams.set("location", location);
     }
+    if (categories) {
+      redirect.searchParams.set("categories", categories);
+    }
     redirect.searchParams.set(
       "message",
       "Data expired, showing the first page results."
@@ -96,6 +107,8 @@ export async function GET(request: NextRequest, response: NextResponse) {
     location: record.fields["Suburb"],
     category: record.fields["Tool Category"],
     owner: record.fields["Email"],
+    delivery: record.fields["Delivery"],
+    deliveryFee: record.fields["DeliveryFee"],
     status: record.fields["Status"],
     createdAt: record.fields["createdTime"],
     updatedAt: record.fields["createdTime"],

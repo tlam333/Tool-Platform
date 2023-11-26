@@ -80,7 +80,7 @@ function PaginationControls({ defaultLimit, total, nextPage, message }: Props) {
         onClick={setPreviousePage(Number(page))}
         disabled={Number(page) <= 1}
       >
-        «
+        Prev
       </button>
 
       <button className="join-item btn">Page {page}</button>
@@ -90,7 +90,7 @@ function PaginationControls({ defaultLimit, total, nextPage, message }: Props) {
         onClick={setNextPage(Number(page))}
         disabled={!nextPage}
       >
-        »
+        Next
       </button>
     </div>
   );

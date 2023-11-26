@@ -8,6 +8,9 @@ export const ToolCategories = [
   "Agricultural",
   "Cleaning",
   "Access Equipment",
+  "Generators",
+  "Material Handling",
+  "Concrete",
   "Other",
 ];
 export const RentalPeriods = ["Per Hour", "Per Day", "Per Week", "Per Month"];

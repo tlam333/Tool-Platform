@@ -8,7 +8,8 @@ export async function getAllTools(searchParams: {
   const keyword = searchParams["keyword"] ?? "";
   const location = searchParams["location"] ?? "";
   const offset = searchParams["offset"] ?? "";
-  const payloadUrl = `${apiURL}/tools?page=${page}&limit=${limit}&keyword=${keyword}&location=${location}&offset=${offset}`;
+  const categories = searchParams["categories"] ?? "";
+  const payloadUrl = `${apiURL}/tools?page=${page}&limit=${limit}&keyword=${keyword}&location=${location}&offset=${offset}&categories=${categories}`;
 
   const res = await fetch(`${payloadUrl}`, {
     method: "GET",
