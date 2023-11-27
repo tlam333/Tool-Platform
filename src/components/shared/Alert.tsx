@@ -24,7 +24,7 @@ function Alert({ message }: props) {
       <span>
         <Balancer>{message}</Balancer>
       </span>
-      <button className="btn btn-sm">Ok</button>
+      {/* <button className="btn btn-sm">Ok</button> */}
     </div>
   );
 }
