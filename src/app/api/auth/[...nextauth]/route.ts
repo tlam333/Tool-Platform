@@ -129,10 +129,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     async signIn({ profile, user }) {
-      if (user.id) {
-        //user signed in using email
-        return true;
-      }
       try {
         //find or create the user in the database
         const response = await getUsers(undefined, user.email as string);
