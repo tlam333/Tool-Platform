@@ -9,11 +9,11 @@ export async function GET(request: NextRequest, context: any) {
 
   const resp = await getUserDetails(id);
 
-  const { error } = await resp;
+  const { error } = resp;
 
-  const { user } = await resp;
+  const { user } = resp;
 
-  return NextResponse.json({ user: user });
+  return NextResponse.json({ user: user, error: error });
 }
 
 export async function getUserDetails(id: string) {
@@ -29,7 +29,9 @@ export async function getUserDetails(id: string) {
       console.error(err);
     });
 
-  if (res === "NOT_FOUND") return { error: "NOT_FOUND" };
+  const { error } = res;
+
+  if (error) return { error: "NOT_FOUND" };
 
   const user = {
     id: res.id,

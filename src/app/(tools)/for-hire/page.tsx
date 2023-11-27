@@ -40,7 +40,7 @@ export default async function FindTools({
 
   const ToolsData: Promise<ToolsPage> = getAllTools(searchParams);
   const toolsPage = await ToolsData;
-  const { tools, total, nextPage, message } = await toolsPage;
+  const { tools, total, nextPage, message } = toolsPage;
 
   return (
     <>
