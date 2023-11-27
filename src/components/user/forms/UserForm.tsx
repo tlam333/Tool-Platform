@@ -40,6 +40,7 @@ export default function UserForm({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { data: session, update } = useSession();
+  const [error, setError] = useState("");
 
   const sessionUserId = session?.user?.id;
 
@@ -65,8 +66,9 @@ export default function UserForm({
       setLoading(true);
       const userId = sessionUserId;
       getUser(userId).then((res) => {
-        if (res?.error) {
-          console.log(res.error);
+        if (res.error) {
+          setError("User not found. Please log out and login again!");
+          setLoading(false);
         } else {
           reset({
             id: res.user.id,
@@ -111,7 +113,8 @@ export default function UserForm({
           </Balancer>
         </div>
       )}
-      {!loading && (
+      {error && <Balancer>{error}</Balancer>}
+      {!loading && !error && (
         <form onSubmit={handleSubmit(onSubmit)} name="user_form">
           <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto px-3 xl:px-0">
             <Input
