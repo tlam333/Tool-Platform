@@ -2,9 +2,67 @@ import { Facebook, Instagram, Youtube } from "lucide-react";
 import Link from "next/link";
 export default function Footer() {
   return (
-    <footer className="footer p-10 bg-neutral text-neutral-content">
+    <footer className="footer p-10 bg-neutral text-base-100">
       <nav>
         <header className="footer-title">Usefull Links</header>
+        <Link
+          className="link link-hover"
+          href="/for-hire?categories=Power%20Tools"
+        >
+          Power Tools for hire
+        </Link>
+        <Link
+          className="link link-hover"
+          href="/for-hire?categories=Automotive"
+        >
+          Automotives for hire
+        </Link>
+        <Link
+          className="link link-hover"
+          href="/for-hire?categories=Hand%20Tools"
+        >
+          Hand Tools for hire
+        </Link>
+        <Link className="link link-hover" href="/for-hire?categories=Gardening">
+          Gardening Tools for hire
+        </Link>
+        <Link className="link link-hover" href="/for-hire?categories=Trailers">
+          Trailers for hire
+        </Link>
+
+        <Link className="link link-hover" href="/for-hire?categories=Cleaning">
+          Cleaning Tools for hire
+        </Link>
+      </nav>
+      <nav>
+        <header className="footer-title">Usefull Links</header>
+        <Link
+          className="link link-hover"
+          href="/for-hire?categories=Access%20Equipment"
+        >
+          Access equipment for hire
+        </Link>
+        <Link
+          className="link link-hover"
+          href="/for-hire?categories=Generators"
+        >
+          Generators for hire
+        </Link>
+        <Link
+          className="link link-hover"
+          href="/for-hire?categories=Material%20Handling"
+        >
+          Material Handling equipments for hire
+        </Link>
+        <Link
+          className="link link-hover"
+          href="/for-hire?categories=Heavy%20Machinery"
+        >
+          Heavy Machinery for hire
+        </Link>
+      </nav>
+      <nav>
+        <header className="footer-title">Company</header>
         <Link className="link link-hover" href="/faq">
           FAQs
         </Link>
@@ -13,23 +71,8 @@ export default function Footer() {
           href="https://business.nearbytools.com.au"
           target="_blank"
         >
-          Businesses
+          For Businesses
         </a>
-        <Link
-          className="link link-hover"
-          href="/for-hire?&location=deer%20park"
-        >
-          Tools for hire in Deer Park
-        </Link>
-        <Link className="link link-hover" href="/for-hire?&location=sunbury">
-          Tools for hire in Sunbury
-        </Link>
-      </nav>
-      <nav>
-        <header className="footer-title">Company</header>
-        <Link className="link link-hover" href="#">
-          About
-        </Link>
         <Link className="link link-hover" href="/terms-of-use">
           Terms of use
         </Link>
