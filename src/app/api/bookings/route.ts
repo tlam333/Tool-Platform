@@ -16,11 +16,13 @@ export async function POST(request: Request) {
     toolName,
     ownerId,
     hirerId,
-    startDate,
+    startDate: incomingStartDate,
+    //startDate,
     bookingDuration,
     comments,
     checkoutSessionId,
   } = await request.json();
+  const startDate = new Date(incomingStartDate);
 
   //get tool rent fee and security deposit
   const { tool } = await getToolData(toolId);

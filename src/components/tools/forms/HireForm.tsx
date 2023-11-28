@@ -25,7 +25,6 @@ today.setHours(0, 0, 0, 0);
 
 const bookSchema = Yup.object().shape({
   startDate: Yup.date()
-    .default(today)
     .min(today, "Start date can't be in the past")
     .required()
     .typeError("Start date is required"),
@@ -89,6 +88,12 @@ export default function HireForm({ tool }: Props) {
     const bookingData = JSON.parse(dataStr || "");
 
     bookingData.checkoutSessionId = checkoutSessionId;
+    bookingData.startDate = new Date(bookingData.startDate).setHours(
+      11,
+      0,
+      0,
+      0
+    );
     const res = await createBookingRequest(bookingData);
     const { error, bookingId } = await res;
     if (error) {
