@@ -109,11 +109,12 @@ export default async function ToolDetailsPage({
         <div className="flex flex-col lg:flex-row items-start justify-evenly">
           <div className="mx-auto lg:w-1/2">
             <div className="carousel rounded-box">
-              <div className="carousel-item" key={tool.images[0]}>
+              <div className="carousel-item" key="0">
                 <Image
                   width={375}
                   height={256}
                   src={tool.images[0]}
+                  priority={true}
                   style={{
                     width: "auto",
                     border: "1px solid #ffffff",
