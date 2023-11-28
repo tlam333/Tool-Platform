@@ -40,7 +40,7 @@ function SearchForm() {
       suburb: location,
       categories: categories,
     });
-  }, [keyword, location]);
+  }, [keyword, location, categories]);
 
   const onApplyFilter = async (
     data: {
