@@ -14,7 +14,6 @@ function SearchForm() {
   const router = useRouter();
   //fetch existing search params
   const searchParams = useSearchParams();
-  console.log("Search form called, category-", searchParams.get("categories"));
   const page = searchParams.get("page");
   const limit = searchParams.get("limit");
   const offset = searchParams.get("offset");
