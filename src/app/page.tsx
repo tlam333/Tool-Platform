@@ -137,8 +137,8 @@ export default async function Home({
             </p>
             <p className="py-5 md:py-8">
               <Balancer>
-                We are currently live in Melbourne Metro region. Coming soon to
-                other regions of Victoria!
+                We are currently live in Melbourne Metro and other regions in
+                Victoria. Coming soon to other regions of Victoria!
               </Balancer>
             </p>
 
