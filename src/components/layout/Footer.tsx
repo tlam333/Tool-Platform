@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="footer p-10 bg-neutral text-base-100">
       <nav>
-        <header className="footer-title">Usefull Links</header>
+        <header className="footer-title">Useful Links</header>
         <Link
           className="link link-hover"
           href="/for-hire?categories=Power%20Tools"
@@ -15,7 +15,7 @@ export default function Footer() {
           className="link link-hover"
           href="/for-hire?categories=Automotive"
         >
-          Automotives for hire
+          Automotive equipment for hire
         </Link>
         <Link
           className="link link-hover"
@@ -52,7 +52,7 @@ export default function Footer() {
           className="link link-hover"
           href="/for-hire?categories=Material%20Handling"
         >
-          Material Handling equipments for hire
+          Material Handling equipment for hire
         </Link>
         <Link
           className="link link-hover"
