@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "@/components/tools/forms/Input";
 import { useRouter } from "next/navigation";
 import { LoadingDots } from "@/components/shared/icons";
+import { gaEvent } from "@/lib/gtm";
 
 interface Props {
   buttonText: string;
@@ -75,6 +76,20 @@ export default function EmailSignin({ buttonText, redirect, interest }: Props) {
         redirect: false,
       }).then(({ ok, error }: any) => {
         if (ok) {
+          if (newUser)
+            gaEvent({
+              event: "sign_up",
+              params: {
+                method: "Email",
+              },
+            });
+          else
+            gaEvent({
+              event: "login",
+              params: {
+                method: "Email",
+              },
+            });
           router.push(redirect || "");
         } else {
           setError(error);
